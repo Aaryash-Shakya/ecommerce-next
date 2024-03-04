@@ -12,7 +12,7 @@ const config: Config = {
 		extend: {
 			container: {
 				center: true,
-				padding: "1rem",
+				padding: "1.5rem",
 			},
 			backgroundImage: {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

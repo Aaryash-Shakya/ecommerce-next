@@ -6,7 +6,7 @@ import { HiMenuAlt1 } from "react-icons/hi";
 export default function Navbar() {
 	return (
 		<>
-			<div className="w-full fixed top-0 left-0 bg-base-100 bg-opacity-20">
+			<div className="w-full fixed top-0 left-0 glass">
 				<div className="md:container">
 					<div className="navbar text-primary-dark">
 						<div className="navbar-start">
@@ -16,7 +16,7 @@ export default function Navbar() {
 								</div>
 								<ul
 									tabIndex={0}
-									className="menu menu-md dropdown-content mt-3 z-[10] p-2 shadow bg-base-200 rounded-box w-[90vw] font-playfair text-lg"
+									className="menu menu-md dropdown-content mt-3 z-[10] p-2 shadow bg-base-200 rounded-box w-[90vw] text-lg"
 								>
 									<li>
 										<a className="font-bold underline underline-offset-4">Home</a>
@@ -41,7 +41,7 @@ export default function Navbar() {
 							</a>
 						</div>
 						<div className="navbar-center hidden lg:flex">
-							<ul className="menu menu-horizontal px-1 font-playfair text-lg">
+							<ul className="menu menu-horizontal px-1 font-playfair text-xl space-x-3">
 								<li>
 									<a className="font-bold underline underline-offset-4">Home</a>
 								</li>
