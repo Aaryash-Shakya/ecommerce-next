@@ -16,22 +16,22 @@ export default function Navbar() {
 								</div>
 								<ul
 									tabIndex={0}
-									className="menu menu-md dropdown-content mt-3 z-[10] p-2 shadow bg-base-200 rounded-box w-[90vw] text-lg"
+									className="menu menu-md dropdown-content mt-3 z-[10] p-2 shadow bg-base-200 rounded-box w-[90vw] text-lg underline-offset-4"
 								>
 									<li>
-										<a className="font-bold underline underline-offset-4">Home</a>
+										<a className="font-bold underline">Home</a>
 									</li>
 									<li>
-										<a>Products</a>
+										<a className="hover:underline">Products</a>
 									</li>
 									<li>
-										<a>Categories</a>
+										<a className="hover:underline">Categories</a>
 									</li>
 									<li>
-										<a>About</a>
+										<a className="hover:underline">About</a>
 									</li>
 									<li>
-										<a>Contact Us</a>
+										<a className="hover:underline">Contact Us</a>
 									</li>
 								</ul>
 							</div>
@@ -41,33 +41,33 @@ export default function Navbar() {
 							</a>
 						</div>
 						<div className="navbar-center hidden lg:flex">
-							<ul className="menu menu-horizontal px-1 font-playfair text-xl space-x-3">
+							<ul className="menu menu-horizontal px-1 font-playfair text-xl space-x-3 underline-offset-4">
 								<li>
-									<a className="font-bold underline underline-offset-4">Home</a>
+									<a className="font-bold underline">Home</a>
 								</li>
 								<li>
-									<a>Products</a>
+									<a className="hover:underline">Products</a>
 								</li>
 								<li>
-									<a>Categories</a>
+									<a className="hover:underline">Categories</a>
 								</li>
 								<li>
-									<a>About</a>
+									<a className="hover:underline">About</a>
 								</li>
 								<li>
-									<a>Contact Us</a>
+									<a className="hover:underline">Contact Us</a>
 								</li>
 							</ul>
 						</div>
 						<div className="navbar-end me-4 flex gap-4 md:gap-6 xl:gap-10">
 							<a title="search">
-								<FaSearch className="cursor-pointer text-xl md:text-2xl" />
+								<FaSearch className="cursor-pointer text-xl md:text-2xl hover:text-primary-light" />
 							</a>
 							<a title="cart">
-								<FaShoppingCart className="cursor-pointer text-xl md:text-2xl" />
+								<FaShoppingCart className="cursor-pointer text-xl md:text-2xl hover:text-primary-light" />
 							</a>
 							<a title="profile">
-								<FaUser className="cursor-pointer text-xl md:text-2xl" /> 
+								<FaUser className="cursor-pointer text-xl md:text-2xl hover:text-primary-light" />
 							</a>
 						</div>
 					</div>
