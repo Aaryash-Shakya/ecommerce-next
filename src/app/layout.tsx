@@ -17,6 +17,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" data-theme="light">
+			<head>
+				<link rel="shortcut icon" href="./favicon.png" type="image/png" />
+			</head>
 			<body className={`${inter.className} ${playfair.className}`}>{children}</body>
 		</html>
 	);
