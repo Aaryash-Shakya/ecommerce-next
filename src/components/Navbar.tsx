@@ -16,7 +16,7 @@ export default function Navbar() {
 								</div>
 								<ul
 									tabIndex={0}
-									className="menu menu-md dropdown-content mt-3 z-[10] p-2 shadow bg-base-200 rounded-box w-[90vw] text-lg underline-offset-4"
+									className="menu menu-md dropdown-content mt-3 z-[10] p-2 shadow bg-base-200 rounded-box w-[90vw] max-w-md text-lg underline-offset-4"
 								>
 									<li>
 										<a className="font-bold underline">Home</a>
