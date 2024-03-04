@@ -10,7 +10,42 @@ export default function Explore() {
 					<h2 className="font-playfair text-5xl text-primary-dark font-bold mb-6 text-center">
 						Explore By Category
 					</h2>
-					<div className="flex justify-center items-center gap-4 lg:gap-10">
+					<div className="flex flex-col lg:flex-row justify-center items-center gap-4 lg:gap-10">
+						{/* top menu */}
+						<div className="w-full visible lg:hidden">
+							<ul className="menu menu-horizontal bg-base-200 rounded-box mt-6">
+								<label className="input input-bordered flex items-center justify-center w-full">
+									<input type="text" className="bg-base-100" placeholder="Search" />
+									<FaSearch size={20} className="cursor-pointer" />
+								</label>
+								<li>
+									<a>Living Room</a>
+								</li>
+								<li>
+									<a>Dining Room</a>
+								</li>
+								<li>
+									<a>Meeting Room</a>
+								</li>
+								<li>
+									<a>Living Space</a>
+								</li>
+								<li>
+									<a>Workspace</a>
+								</li>
+								<li>
+									<a>Bedroom</a>
+								</li>
+								<li>
+									<a>Kitchen</a>
+								</li>
+								<button className="btn px-8 btn-primary-light shadow-lg border-none">
+									All Categories <FaArrowRight size={25} />
+								</button>
+							</ul>
+						</div>
+
+						{/* side menu */}
 						<div className="hidden lg:w-1/4 lg:block">
 							<ul className="menu menu-lg bg-base-200 space-y-4 text-primary-dark text-lg rounded-lg">
 								<label className="input input-bordered input-lg flex items-center justify-center w-full">
