@@ -6,7 +6,7 @@ import { HiMenuAlt1 } from "react-icons/hi";
 export default function Navbar() {
 	return (
 		<>
-			<div className="w-full fixed top-0 left-0 glass">
+			<div className="w-full fixed top-0 left-0 glass z-10">
 				<div className="md:container">
 					<div className="navbar text-primary-dark">
 						<div className="navbar-start">

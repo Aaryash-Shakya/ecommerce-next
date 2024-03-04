@@ -6,7 +6,7 @@ export default function Popular() {
 	return (
 		<>
 			<h2 className="font-playfair text-5xl text-center text-primary-dark font-bold mb-4">Popular Products</h2>
-			<div className="w-full grid items-center ">
+			<div className="w-full grid items-center my-4">
 				<div className="carousel carousel-center w-full max-w-screen-xl p-4 space-x-5 mx-auto border-b-2 border-b-primary-dark">
 					<div className="carousel-item">
 						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] carousel-color-1 flex flex-col justify-center items-start">
