@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Popular() {
 	return (
 		<>
-			<h2 className="font-playfair text-5xl text-center text-primary-dark font-bold mb-4">Popular Products</h2>
+			<h2 className="font-playfair text-5xl text-center text-primary-dark font-bold my-4">Popular Products</h2>
 			<div className="w-full grid items-center my-4">
 				<div className="carousel carousel-center w-full max-w-screen-xl p-4 space-x-5 mx-auto border-b-2 border-b-primary-dark">
 					<div className="carousel-item">

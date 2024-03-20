@@ -36,6 +36,11 @@ export default function Footer() {
 							<a className="link link-hover">Terms & Conditions</a>
 							<a className="link link-hover">Privacy Policy</a>
 						</nav>
+						<nav>
+							<h6 className="mb-2 text-primary-dark font-bold text-lg">Contact Us</h6>
+							<a className="link link-hover">Sanepa, Kathmandu</a>
+							<a className="link link-hover">+977 9841223344</a>
+						</nav>
 					</footer>
 					<footer className="footer px-10 py-4 border-t bg-base-200 text-base-content border-base-300">
 						<aside className="items-center grid-flow-col">

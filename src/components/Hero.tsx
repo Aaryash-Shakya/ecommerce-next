@@ -11,8 +11,8 @@ export default function Hero() {
 					}}
 				>
 					<div className="hero-content items-center md:pe-[30vw] text-neutral-content">
-						<div className="max-w-lg text-center md:text-start">
-							<h1 className="mb-6 text-5xl lg:text-6xl font-bold text-primary-dark font-playfair">
+						<div className="max-w-xl text-center md:text-start">
+							<h1 className="mb-6 text-5xl lg:text-6xl font-bold text-primary-dark font-playfair drop-shadow-sm">
 								Exclusive Deals of Furniture Collection
 							</h1>
 							<p className="mb-5 lg:text-lg text-primary-dark">

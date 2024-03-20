@@ -80,27 +80,27 @@ export default function Explore() {
 						</div>
 						<div className="w-full ld:w-3/4">
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-8">
-								<div className="bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
-									<p className="text-5xl font-playfair font-bold text-primary-dark">Couch</p>
-									<button className="btn px-8 btn-primary-light shadow-lg border-none">
+								<div className="group bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
+									<p className="hidden group-hover:block text-5xl font-playfair font-bold text-primary-dark">Couch</p>
+									<button className="hidden group-hover:block btn px-8 btn-primary-light shadow-lg border-none">
 										EXPLORE
 									</button>
 								</div>
-								<div className="bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
-									<p className="text-5xl font-playfair font-bold text-primary-dark">Couch</p>
-									<button className="btn px-8 btn-primary-light shadow-lg border-none">
+								<div className="group bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
+									<p className="hidden group-hover:block text-5xl font-playfair font-bold text-primary-dark">Couch</p>
+									<button className="hidden group-hover:block btn px-8 btn-primary-light shadow-lg border-none">
 										EXPLORE
 									</button>
 								</div>
-								<div className="bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
-									<p className="text-5xl font-playfair font-bold text-primary-dark">Couch</p>
-									<button className="btn px-8 btn-primary-light shadow-lg border-none">
+								<div className="group bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
+									<p className="hidden group-hover:block text-5xl font-playfair font-bold text-primary-dark">Couch</p>
+									<button className="hidden group-hover:block btn px-8 btn-primary-light shadow-lg border-none">
 										EXPLORE
 									</button>
 								</div>
-								<div className="bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
-									<p className="text-5xl font-playfair font-bold text-primary-dark">Couch</p>
-									<button className="btn px-8 btn-primary-light shadow-lg border-none">
+								<div className="group bg-base-200 rounded-3xl w-full aspect-video hover:bg-base-300 flex flex-col items-center justify-center gap-4">
+									<p className="hidden group-hover:block text-5xl font-playfair font-bold text-primary-dark">Couch</p>
+									<button className="hidden group-hover:block btn px-8 btn-primary-light shadow-lg border-none">
 										EXPLORE
 									</button>
 								</div>
