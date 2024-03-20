@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Features() {
 	return (
 		<>
-			<div className="w-full carousel-color-2 py-8">
+			<div className="w-full faint-blue py-8">
 				<div className="md:container">
 					<h2 className="font-playfair text-5xl text-primary-dark font-bold mb-4 text-center">Features</h2>
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-6 lg:gap-x-16">
