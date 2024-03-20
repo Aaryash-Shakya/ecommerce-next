@@ -5,3 +5,19 @@
 .btn-primary-light {
 	@apply bg-primary-light text-white hover:bg-primary-dark;
 }
+
+.carousel-color-1 {
+	background-color: #caf3e5;
+}
+.carousel-color-2 {
+	background-color: #e0eff6;
+}
+.carousel-color-3 {
+	background-color: #eeebff;
+}
+.carousel-color-4 {
+	background-color: #fff4e7;
+}
+.carousel-color-5 {
+	background-color: #fdfbf8;
+}
