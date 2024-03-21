@@ -25,7 +25,7 @@ export default function Popular() {
 						</div>
 					</div>
 					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-orange flex flex-col justify-center items-start">
+						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-purple flex flex-col justify-center items-start">
 							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
 							<p className="mt-4 font-semibold">Premium Sofa</p>
 							<p className="mt-4">Minimal single chair</p>
@@ -33,7 +33,7 @@ export default function Popular() {
 						</div>
 					</div>
 					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] flex flex-col justify-center items-start">
+						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-orange flex flex-col justify-center items-start">
 							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
 							<p className="mt-4 font-semibold">Premium Sofa</p>
 							<p className="mt-4">Minimal single chair</p>

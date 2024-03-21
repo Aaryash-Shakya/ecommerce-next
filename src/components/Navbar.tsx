@@ -61,13 +61,13 @@ export default function Navbar() {
 						</div>
 						<div className="navbar-end me-4 flex gap-4 md:gap-6 xl:gap-10">
 							<a title="search">
-								<FaSearch className="cursor-pointer text-xl md:text-2xl hover:text-primary-light" />
+								<FaSearch className="cursor-pointer text-xl md:text-2xl hover:text-primary-dark/80" />
 							</a>
 							<a title="cart">
-								<FaShoppingCart className="cursor-pointer text-xl md:text-2xl hover:text-primary-light" />
+								<FaShoppingCart className="cursor-pointer text-xl md:text-2xl hover:text-primary-dark/80" />
 							</a>
 							<a title="profile">
-								<FaUser className="cursor-pointer text-xl md:text-2xl hover:text-primary-light" />
+								<FaUser className="cursor-pointer text-xl md:text-2xl hover:text-primary-dark/80" />
 							</a>
 						</div>
 					</div>
