@@ -1,5 +1,6 @@
 import { FurnitureType, furnitures } from "@/data/furniture.data";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaCodeCompare } from "react-icons/fa6";
@@ -50,7 +51,7 @@ function ProductCard({ id }: ProductCardProps) {
                     </div> */}
 				</div>
 				<div className="hidden group-hover:flex flex-col gap-4 absolute w-full aspect-[4/5] bg-transparent group-hover:bg-black/70 items-center justify-center transition- ease-in-out duration-700">
-					<button className="btn btn-primary-dark border-0">Add to Cart</button>
+					<Link href={`/product/${product.id}`} className="btn btn-primary-dark border-0">Add to Cart</Link>
 					<div className="options flex-center text-white gap-2">
 						<button className="btn btn-ghost">
 							<FaRegHeart /> Like
