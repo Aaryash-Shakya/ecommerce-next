@@ -13,12 +13,12 @@ const PopularItem: React.FC<PopularItemPropsType> = ({ index, itemId }) => {
 				className={`skeleton p-4 md:p-7 w-64 aspect-[3/4] flex flex-col justify-center items-start
                     ${
 						index % 4 === 0
-							? "faint-green"
+							? "bg-faint-green"
 							: index % 4 === 1
-							? "faint-blue"
+							? "bg-faint-blue"
 							: index % 4 === 2
-							? "faint-purple"
-							: "faint-orange"
+							? "bg-faint-purple"
+							: "bg-faint-orange"
 					}
                     `}
 			>

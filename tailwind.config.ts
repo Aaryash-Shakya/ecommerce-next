@@ -24,6 +24,12 @@ const config: Config = {
 			colors: {
 				"primary-light": "#709088",
 				"primary-dark": "#07484A",
+				"faint-green": "#caf3e5",
+				"faint-blue": "#e0eff6",
+				"faint-purple": "#eeebff",
+				"faint-orange": "#fff4e7",
+				"faint-gray": "#fdfbf8",
+
 			},
 			fontFamily: {
 				playfair: ["Playfair Display", "serif"],

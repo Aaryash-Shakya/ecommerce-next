@@ -8,19 +8,3 @@
 .btn-primary-dark {
 	@apply bg-primary-dark text-white hover:bg-[#053738];
 }
-
-.faint-green {
-	background-color: #caf3e5;
-}
-.faint-blue {
-	background-color: #e0eff6;
-}
-.faint-purple {
-	background-color: #eeebff;
-}
-.faint-orange {
-	background-color: #fff4e7;
-}
-.faint-gray {
-	background-color: #fdfbf8;
-}
