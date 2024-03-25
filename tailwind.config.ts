@@ -29,7 +29,7 @@ const config: Config = {
 				"faint-purple": "#eeebff",
 				"faint-orange": "#fff4e7",
 				"faint-gray": "#fdfbf8",
-
+				"faint-red": "#f9d9da",
 			},
 			fontFamily: {
 				playfair: ["Playfair Display", "serif"],
