@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { GiWoodenChair } from "react-icons/gi";
@@ -19,19 +20,29 @@ export default function Navbar() {
 									className="menu menu-md dropdown-content mt-3 z-[10] p-2 shadow bg-base-200 rounded-box w-[90vw] max-w-md text-lg underline-offset-4"
 								>
 									<li>
-										<a className="font-bold underline">Home</a>
+										<Link href="/" className="font-bold underline">
+											Home
+										</Link>
 									</li>
 									<li>
-										<a className="hover:underline">Products</a>
+										<Link href="/products" className="hover:underline">
+											Products
+										</Link>
 									</li>
 									<li>
-										<a className="hover:underline">Categories</a>
+										<Link href="#" className="hover:underline">
+											Categories
+										</Link>
 									</li>
 									<li>
-										<a className="hover:underline">About</a>
+										<Link href="#" className="hover:underline">
+											About
+										</Link>
 									</li>
 									<li>
-										<a className="hover:underline">Contact Us</a>
+										<Link href="#" className="hover:underline">
+											Contact
+										</Link>
 									</li>
 								</ul>
 							</div>
@@ -43,19 +54,29 @@ export default function Navbar() {
 						<div className="navbar-center hidden lg:flex">
 							<ul className="menu menu-horizontal px-1 font-playfair text-xl space-x-3 underline-offset-4">
 								<li>
-									<a className="font-bold underline">Home</a>
+									<Link href="/" className="font-bold underline">
+										Home
+									</Link>
 								</li>
 								<li>
-									<a className="hover:underline">Products</a>
+									<Link href="/products" className="hover:underline">
+										Products
+									</Link>
 								</li>
 								<li>
-									<a className="hover:underline">Categories</a>
+									<Link href="#" className="hover:underline">
+										Categories
+									</Link>
 								</li>
 								<li>
-									<a className="hover:underline">About</a>
+									<Link href="#" className="hover:underline">
+										About
+									</Link>
 								</li>
 								<li>
-									<a className="hover:underline">Contact Us</a>
+									<Link href="#" className="hover:underline">
+										Contact
+									</Link>
 								</li>
 							</ul>
 						</div>
