@@ -72,7 +72,7 @@ export const furnitures: FurnitureType[] = [
 		price: 3000,
 		img: "chair-8.jpg",
 		tags: ["single", "minimal", "wood", "plastic", "white"],
-		location: ["living-room", "kitchen", "office", "study-room"],
+		location: ["living-room",  "office", "study-room"],
 	},
 	{
 		id: 9,
@@ -80,7 +80,7 @@ export const furnitures: FurnitureType[] = [
 		price: 5000,
 		img: "chair-9.jpg",
 		tags: ["single", "minimal", "wood", "brown"],
-		location: ["living-room", "kitchen", "office", "study-room"],
+		location: ["living-room", "office", "study-room"],
 	},
 	{
 		id: 10,

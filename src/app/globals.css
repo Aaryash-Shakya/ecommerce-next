@@ -8,7 +8,9 @@
 .btn-primary-dark {
 	@apply bg-primary-dark text-white hover:bg-[#053738];
 }
-
 .flex-center {
 	@apply flex items-center justify-center;
+}
+.nav-margin {
+	@apply mt-[64px] lg:mt-[78px];
 }

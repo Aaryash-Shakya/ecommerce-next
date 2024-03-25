@@ -27,6 +27,23 @@ function ProductCard({ id }: ProductCardProps) {
 						{product.name}
 						{/* <div className="badge badge-outline">NEW</div> */}
 					</h2>
+					<div className="badges space-x-2 space-y-2">
+						{product.location.includes("office") && (
+							<span className="badge badge-neutral badge-outline">office</span>
+						)}
+						{product.location.includes("living-room") && (
+							<span className="badge badge-neutral badge-outline">living room</span>
+						)}
+						{product.location.includes("study-room") && (
+							<span className="badge badge-neutral badge-outline">study room</span>
+						)}
+						{product.location.includes("kitchen") && (
+							<span className="badge badge-neutral badge-outline">kitchen</span>
+						)}
+						{product.location.includes("bedroom") && (
+							<span className="badge badge-neutral badge-outline">bedroom</span>
+						)}
+					</div>
 					<p className="text-primary-light text-lg font-semibold align-baseline">Rs {product.price}</p>
 					{/* <div className="card-actions justify-end">
                         <button className="btn btn-primary-dark">Buy Now</button>
