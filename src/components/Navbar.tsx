@@ -37,7 +37,7 @@ export default function Navbar() {
 							</div>
 							<a className="btn btn-ghost text-xl">
 								<GiWoodenChair size={25} />
-								logo
+								HeartWood
 							</a>
 						</div>
 						<div className="navbar-center hidden lg:flex">

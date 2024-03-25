@@ -16,8 +16,8 @@ export default function Testimonials() {
 						Testimonials
 					</h2>
 					<h3 className="text-2xl text-primary-dark mb-4 text-center">Over 10,000 happy customers</h3>
-					<div className="flex flex-col md:flex-row gap-4 md:gap-x-6 lg:gap-x-16 max-w-screen-xl mx-auto">
-						<div className="img-container w-full md:w-1/3 lg:w-1/4 overflow-hidden relative ps-12 pt-12">
+					<div className="flex flex-col md:flex-row gap-4 md:gap-x-6 lg:gap-x-16 max-w-screen-xl mx-auto p-8 md:p-2">
+						<div className="img-container w-full md:w-1/3 lg:w-1/4 overflow-hidden relative ps-12 pt-12 mx-auto">
 							<Image
 								src="/testimonials/testimonial-1.jpg"
 								height={500}
@@ -27,7 +27,7 @@ export default function Testimonials() {
 							/>
 							<BiSolidQuoteLeft className="text-9xl text-faint-blue saturate-200 absolute top-0 left-0" />
 						</div>
-						<div className="testimonial-content px-8 md:px-2 w-full md:w-2/3 lg:w-3/4 flex flex-col justify-evenly pt-5 relative">
+						<div className="testimonial-content md:px-2 w-full md:w-2/3 lg:w-3/4 flex flex-col justify-evenly pt-5 relative">
 							<div className="message text-primary-dark/85 text-base lg:text-lg mb-4">
 								{
 									"I stumbled upon HeartWood while browsing for furniture online, and I'm so glad I did. Not only did they have exactly what I was looking for, but the entire shopping experience was seamless and enjoyable. The website is user-friendly, the product descriptions are detailed, and the checkout process is straightforward. Plus, the furniture arrived promptly and in perfect condition. HeartWood has earned a loyal customer in me."
@@ -40,7 +40,7 @@ export default function Testimonials() {
 							</div>
 
 							{/* arrow controls */}
-							<div className="controls absolute bottom-0 right-6 flex items-center gap-4 text-xs font-bold">
+							<div className="controls absolute bottom-0 right-0 flex items-center gap-4 text-xs font-bold">
 								<button
 									className="prev bg-faint-blue hover:saturate-200 hover:shadow rounded-full flex-center h-10 w-10"
 									onClick={() => alert("prev")}
