@@ -1,66 +1,34 @@
+"use client";
+
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import ProductCard from "./ProductCard";
 import { furnitures } from "@/data/furniture.data";
 import Image from "next/image";
 import { GiSettingsKnobs } from "react-icons/gi";
 
-function FilterBar() {
-	return (
-		<div className="w-full bg-primary-light/40">
-			<div className="md:container px-4 md:px-0 py-2 flex flex-col md:flex-row items-center justify-between text-black">
-				<div className="left flex-center">
-					<details className="dropdown">
-						<summary className="btn btn-ghost text-lg">
-							<GiSettingsKnobs /> Filter
-						</summary>
-						<ul className="p-2 shadow dropdown-content z-[1] bg-base-100 rounded-box w-44 form-control items-start">
-							<label className="label cursor-pointer flex-center gap-4">
-								<input type="checkbox" defaultChecked className="checkbox" />
-								<span className="label-text">Bedroom</span>
-							</label>
-							<label className="label cursor-pointer flex-center gap-4">
-								<input type="checkbox" defaultChecked className="checkbox" />
-								<span className="label-text">Kitchen</span>
-							</label>
-							<label className="label cursor-pointer flex-center gap-4">
-								<input type="checkbox" defaultChecked className="checkbox" />
-								<span className="label-text">Living Room</span>
-							</label>
-							<label className="label cursor-pointer flex-center gap-4">
-								<input type="checkbox" defaultChecked className="checkbox" />
-								<span className="label-text">Office</span>
-							</label>
-							<label className="label cursor-pointer flex-center gap-4">
-								<input type="checkbox" defaultChecked className="checkbox" />
-								<span className="label-text">Study Room</span>
-							</label>
-							<button className="btn btn-primary-dark w-full">Filter</button>
-						</ul>
-					</details>
-					| Showing 1-8 of {furnitures.length} results
-				</div>
-				<div className="right flex-center gap-2">
-					<span>Show</span>
-					<input type="text" placeholder="8" className="input input-bordered aspect-square" />
-					<span className="flex-center w-20">| Sort By</span>
-					<select className="select select-bordered w-full max-w-40">
-						<option>Default</option>
-						<option>Price: High to Low</option>
-						<option>Price: Low to High</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	);
-}
-
 function Products() {
+	const [livingRoomFlag, setLivingRoomFlag] = useState(true);
+	const [studyRoomFlag, setStudyRoomFlag] = useState(true);
+	const [bedroomFlag, setBedroomFlag] = useState(true);
+	const [kitchenFlag, setKitchenFlag] = useState(true);
+	const [officeFlag, setOfficeFlag] = useState(true);
+
 	const mapProducts = () => {
 		return furnitures.map(item => {
-			return <ProductCard key={item.id} id={item.id} />;
+			if (item.location.indexOf("living-room") != -1 && livingRoomFlag) {
+				return <ProductCard key={item.id} id={item.id} />;
+			} else if (item.location.indexOf("study-room") != -1 && studyRoomFlag) {
+				return <ProductCard key={item.id} id={item.id} />;
+			} else if (item.location.indexOf("kitchen") != -1 && kitchenFlag) {
+				return <ProductCard key={item.id} id={item.id} />;
+			} else if (item.location.indexOf("office") != -1 && officeFlag) {
+				return <ProductCard key={item.id} id={item.id} />;
+			} else if (item.location.indexOf("bedroom") != -1 && bedroomFlag) {
+				return <ProductCard key={item.id} id={item.id} />;
+			}
 		});
 	};
 	return (
@@ -90,7 +58,75 @@ function Products() {
 			</div>
 
 			{/* filter bar */}
-			<FilterBar />
+			<div className="w-full bg-primary-light/40">
+				<div className="md:container px-4 md:px-0 py-2 flex flex-col md:flex-row items-center justify-between text-black">
+					<div className="left flex-center">
+						<details className="dropdown">
+							<summary className="btn btn-ghost text-lg">
+								<GiSettingsKnobs /> Filter
+							</summary>
+							<ul className="p-2 shadow dropdown-content z-[1] bg-base-100 rounded-box w-44 form-control items-start">
+								<label className="label cursor-pointer flex-center gap-4">
+									<input
+										type="checkbox"
+										defaultChecked
+										className="checkbox"
+										onClick={() => setBedroomFlag(!bedroomFlag)}
+									/>
+									<span className="label-text">Bedroom</span>
+								</label>
+								<label className="label cursor-pointer flex-center gap-4">
+									<input
+										type="checkbox"
+										defaultChecked
+										className="checkbox"
+										onClick={() => setKitchenFlag(!kitchenFlag)}
+									/>
+									<span className="label-text">Kitchen</span>
+								</label>
+								<label className="label cursor-pointer flex-center gap-4">
+									<input
+										type="checkbox"
+										defaultChecked
+										className="checkbox"
+										onClick={() => setLivingRoomFlag(!livingRoomFlag)}
+									/>
+									<span className="label-text">Living Room</span>
+								</label>
+								<label className="label cursor-pointer flex-center gap-4">
+									<input
+										type="checkbox"
+										defaultChecked
+										className="checkbox"
+										onClick={() => setOfficeFlag(!officeFlag)}
+									/>
+									<span className="label-text">Office</span>
+								</label>
+								<label className="label cursor-pointer flex-center gap-4">
+									<input
+										type="checkbox"
+										defaultChecked
+										className="checkbox"
+										onClick={() => setStudyRoomFlag(!studyRoomFlag)}
+									/>
+									<span className="label-text">Study Room</span>
+								</label>
+							</ul>
+						</details>
+						| Showing 1-8 of {furnitures.length} results
+					</div>
+					<div className="right flex-center gap-2">
+						<span>Show</span>
+						<input type="text" placeholder="8" className="input input-bordered aspect-square" />
+						<span className="flex-center w-20">| Sort By</span>
+						<select className="select select-bordered w-full max-w-40">
+							<option>Default</option>
+							<option>Price: High to Low</option>
+							<option>Price: Low to High</option>
+						</select>
+					</div>
+				</div>
+			</div>
 
 			<div className="w-full">
 				<div className="md:container px-4 md:px-0">

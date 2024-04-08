@@ -1,11 +1,13 @@
+"use client";
+
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { furnitures } from "@/data/furniture.data";
+import { FurnitureType, furnitures } from "@/data/furniture.data";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { CiHeart, CiShare2 } from "react-icons/ci";
-import { FaCommentDots } from "react-icons/fa";
+import { FaCommentDots, FaMinus, FaPlus } from "react-icons/fa";
 import { GoStarFill } from "react-icons/go";
 
 type ProductProps = {
@@ -14,9 +16,142 @@ type ProductProps = {
 	};
 };
 
+function BottomDetails() {
+	return (
+		<>
+			<div className="mt-24 max-w-4xl">
+				<ul className="flex border-b">
+					<li className="text-gray-800 font-bold text-sm bg-gray-100 py-3 px-8 border-b-2 border-gray-800 cursor-pointer transition-all">
+						Description
+					</li>
+					<li className="text-gray-400 font-bold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all">
+						Reviews
+					</li>
+				</ul>
+				<div className="mt-8">
+					<h3 className="text-lg font-bold text-gray-800">Product Description</h3>
+					<p className="text-sm text-gray-400 mt-4">
+						Elevate your lounging experience with our premium single sofa. Crafted for ultimate comfort and
+						designed with modern sophistication, this versatile piece is an essential addition to any cozy
+						corner of your home. The plush cushions and supportive frame ensure luxurious comfort, perfect
+						for unwinding after a long day. Its sleek design and neutral color palette offer a timeless
+						aesthetic.
+					</p>
+				</div>
+				<ul className="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
+					<li>
+						A comfortable single sofa is a must-have for any living space due to its versatility and
+						functionality.
+					</li>
+					<li>
+						Available in a variety of sizes to fit your space perfectly, from compact designs for small
+						apartments to spacious options for larger rooms.
+					</li>
+					<li>
+						Available in a variety of sizes to fit your space perfectly, from compact designs for small
+						apartments to spacious options for larger rooms.
+					</li>
+					<li>
+						Personalize your sofa with your favorite throw pillows or blankets to create a cozy retreat that
+						reflects your unique style and personality.
+					</li>
+				</ul>
+			</div>
+			<div className="mt-8 max-w-md">
+				<h3 className="text-lg font-bold text-gray-800">Reviews(10)</h3>
+				<div className="space-y-3 mt-4">
+					<div className="flex items-center">
+						<p className="text-sm text-gray-800 font-bold">5.0</p>
+						<svg
+							className="w-5 fill-gray-800 ml-1"
+							viewBox="0 0 14 13"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
+						</svg>
+						<div className="bg-gray-300 rounded w-full h-2 ml-3">
+							<div className="w-2/3 h-full rounded bg-gray-800"></div>
+						</div>
+						<p className="text-sm text-gray-800 font-bold ml-3">66%</p>
+					</div>
+					<div className="flex items-center">
+						<p className="text-sm text-gray-800 font-bold">4.0</p>
+						<svg
+							className="w-5 fill-gray-800 ml-1"
+							viewBox="0 0 14 13"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
+						</svg>
+						<div className="bg-gray-300 rounded w-full h-2 ml-3">
+							<div className="w-1/3 h-full rounded bg-gray-800"></div>
+						</div>
+						<p className="text-sm text-gray-800 font-bold ml-3">33%</p>
+					</div>
+					<div className="flex items-center">
+						<p className="text-sm text-gray-800 font-bold">3.0</p>
+						<svg
+							className="w-5 fill-gray-800 ml-1"
+							viewBox="0 0 14 13"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
+						</svg>
+						<div className="bg-gray-300 rounded w-full h-2 ml-3">
+							<div className="w-1/6 h-full rounded bg-gray-800"></div>
+						</div>
+						<p className="text-sm text-gray-800 font-bold ml-3">16%</p>
+					</div>
+					<div className="flex items-center">
+						<p className="text-sm text-gray-800 font-bold">2.0</p>
+						<svg
+							className="w-5 fill-gray-800 ml-1"
+							viewBox="0 0 14 13"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
+						</svg>
+						<div className="bg-gray-300 rounded w-full h-2 ml-3">
+							<div className="w-1/12 h-full rounded bg-gray-800"></div>
+						</div>
+						<p className="text-sm text-gray-800 font-bold ml-3">8%</p>
+					</div>
+					<div className="flex items-center">
+						<p className="text-sm text-gray-800 font-bold">1.0</p>
+						<svg
+							className="w-5 fill-gray-800 ml-1"
+							viewBox="0 0 14 13"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
+						</svg>
+						<div className="bg-gray-300 rounded w-full h-2 ml-3">
+							<div className="w-[6%] h-full rounded bg-gray-800"></div>
+						</div>
+						<p className="text-sm text-gray-800 font-bold ml-3">6%</p>
+					</div>
+				</div>
+				<button
+					type="button"
+					className="w-full mt-8 px-4 py-2 bg-transparent border-2 border-gray-800 text-gray-800 font-bold rounded"
+				>
+					Read all reviews
+				</button>
+			</div>
+		</>
+	);
+}
+
 function Product({ params }: ProductProps) {
+	const [quantity, setQuantity] = useState(1);
+
 	const { productId } = params;
-	const product = furnitures.filter(product => product.id.toString() === productId)[0];
+	const product: FurnitureType = furnitures.filter(product => product.id.toString() === productId)[0] || furnitures[0];
 	// const product = furnitures[0];
 	return (
 		<>
@@ -36,9 +171,7 @@ function Product({ params }: ProductProps) {
 							<Link href="/products">Chairs</Link>
 						</li>
 						<li>
-							<Link href="#">
-								{productId} __ {product.name}
-							</Link>
+							<Link href="#">{product.name}</Link>
 						</li>
 					</ul>
 				</div>
@@ -122,12 +255,35 @@ function Product({ params }: ProductProps) {
 							<hr className="my-8" />
 							{/* rating */}
 							<div className="flex flex-warp items-start">
-								<div className="flex-center gap-1">
-									<GoStarFill className="text-yellow-400 text-4xl" />
-									<GoStarFill className="text-yellow-400 text-4xl" />
-									<GoStarFill className="text-yellow-400 text-4xl" />
-									<GoStarFill className="text-yellow-400 text-4xl" />
-									<GoStarFill className="text-slate-500 text-4xl" />
+								<div className="flex-center gap-1 cursor-pointer">
+									<form className="rating">
+										<input
+											type="radio"
+											name="rating-2"
+											className="mask mask-star-2 bg-orange-400"
+										/>
+										<input
+											type="radio"
+											name="rating-2"
+											className="mask mask-star-2 bg-orange-400"
+											checked
+										/>
+										<input
+											type="radio"
+											name="rating-2"
+											className="mask mask-star-2 bg-orange-400"
+										/>
+										<input
+											type="radio"
+											name="rating-2"
+											className="mask mask-star-2 bg-orange-400"
+										/>
+										<input
+											type="radio"
+											name="rating-2"
+											className="mask mask-star-2 bg-orange-400"
+										/>
+									</form>
 								</div>
 								<button
 									type="button"
@@ -168,7 +324,7 @@ function Product({ params }: ProductProps) {
 								<h3 className="text-lg font-bold text-gray-800">Select Quantity</h3>
 
 								{/* copied from flowbite fix later */}
-								<form className="mt-2">
+								{/* <form className="mt-2">
 									<div className="relative flex items-center max-w-[8rem]">
 										<button
 											type="button"
@@ -230,7 +386,26 @@ function Product({ params }: ProductProps) {
 									>
 										Available Quantity: 19
 									</p>
-								</form>
+								</form> */}
+								<div className="flex-center gap-0 w-fit mt-2">
+									<button
+										className="rounded-tl-md rounded-bl-md border h-14 w-14 flex-center hover:bg-slate-200"
+										onClick={() => {
+											if (quantity > 0) setQuantity(quantity - 1);
+										}}
+									>
+										<FaMinus />
+									</button>
+									<input type="text" value={quantity} className="h-14 w-14 border text-center" />
+									<button
+										className="rounded-tr-md rounded-br-md border h-14 w-14 flex-center hover:bg-slate-200"
+										onClick={() => {
+											setQuantity(quantity + 1);
+										}}
+									>
+										<FaPlus />
+									</button>
+								</div>
 							</div>
 							<hr className="my-8" />
 
@@ -252,130 +427,7 @@ function Product({ params }: ProductProps) {
 					</div>
 
 					{/* bottom details */}
-					<div className="mt-24 max-w-4xl">
-						<ul className="flex border-b">
-							<li className="text-gray-800 font-bold text-sm bg-gray-100 py-3 px-8 border-b-2 border-gray-800 cursor-pointer transition-all">
-								Description
-							</li>
-							<li className="text-gray-400 font-bold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all">
-								Reviews
-							</li>
-						</ul>
-						<div className="mt-8">
-							<h3 className="text-lg font-bold text-gray-800">Product Description</h3>
-							<p className="text-sm text-gray-400 mt-4">
-								Elevate your lounging experience with our premium single sofa. Crafted for ultimate
-								comfort and designed with modern sophistication, this versatile piece is an essential
-								addition to any cozy corner of your home. The plush cushions and supportive frame ensure
-								luxurious comfort, perfect for unwinding after a long day. Its sleek design and neutral
-								color palette offer a timeless aesthetic.
-							</p>
-						</div>
-						<ul className="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
-							<li>
-								A comfortable single sofa is a must-have for any living space due to its versatility and
-								functionality.
-							</li>
-							<li>
-								Available in a variety of sizes to fit your space perfectly, from compact designs for
-								small apartments to spacious options for larger rooms.
-							</li>
-							<li>
-								Available in a variety of sizes to fit your space perfectly, from compact designs for
-								small apartments to spacious options for larger rooms.
-							</li>
-							<li>
-								Personalize your sofa with your favorite throw pillows or blankets to create a cozy
-								retreat that reflects your unique style and personality.
-							</li>
-						</ul>
-					</div>
-					<div className="mt-8 max-w-md">
-						<h3 className="text-lg font-bold text-gray-800">Reviews(10)</h3>
-						<div className="space-y-3 mt-4">
-							<div className="flex items-center">
-								<p className="text-sm text-gray-800 font-bold">5.0</p>
-								<svg
-									className="w-5 fill-gray-800 ml-1"
-									viewBox="0 0 14 13"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-								</svg>
-								<div className="bg-gray-300 rounded w-full h-2 ml-3">
-									<div className="w-2/3 h-full rounded bg-gray-800"></div>
-								</div>
-								<p className="text-sm text-gray-800 font-bold ml-3">66%</p>
-							</div>
-							<div className="flex items-center">
-								<p className="text-sm text-gray-800 font-bold">4.0</p>
-								<svg
-									className="w-5 fill-gray-800 ml-1"
-									viewBox="0 0 14 13"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-								</svg>
-								<div className="bg-gray-300 rounded w-full h-2 ml-3">
-									<div className="w-1/3 h-full rounded bg-gray-800"></div>
-								</div>
-								<p className="text-sm text-gray-800 font-bold ml-3">33%</p>
-							</div>
-							<div className="flex items-center">
-								<p className="text-sm text-gray-800 font-bold">3.0</p>
-								<svg
-									className="w-5 fill-gray-800 ml-1"
-									viewBox="0 0 14 13"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-								</svg>
-								<div className="bg-gray-300 rounded w-full h-2 ml-3">
-									<div className="w-1/6 h-full rounded bg-gray-800"></div>
-								</div>
-								<p className="text-sm text-gray-800 font-bold ml-3">16%</p>
-							</div>
-							<div className="flex items-center">
-								<p className="text-sm text-gray-800 font-bold">2.0</p>
-								<svg
-									className="w-5 fill-gray-800 ml-1"
-									viewBox="0 0 14 13"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-								</svg>
-								<div className="bg-gray-300 rounded w-full h-2 ml-3">
-									<div className="w-1/12 h-full rounded bg-gray-800"></div>
-								</div>
-								<p className="text-sm text-gray-800 font-bold ml-3">8%</p>
-							</div>
-							<div className="flex items-center">
-								<p className="text-sm text-gray-800 font-bold">1.0</p>
-								<svg
-									className="w-5 fill-gray-800 ml-1"
-									viewBox="0 0 14 13"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-								</svg>
-								<div className="bg-gray-300 rounded w-full h-2 ml-3">
-									<div className="w-[6%] h-full rounded bg-gray-800"></div>
-								</div>
-								<p className="text-sm text-gray-800 font-bold ml-3">6%</p>
-							</div>
-						</div>
-						<button
-							type="button"
-							className="w-full mt-8 px-4 py-2 bg-transparent border-2 border-gray-800 text-gray-800 font-bold rounded"
-						>
-							Read all reviews
-						</button>
-					</div>
+					<BottomDetails />
 				</div>
 			</div>
 			<Footer />
