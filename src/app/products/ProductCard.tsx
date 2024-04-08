@@ -1,26 +1,22 @@
 import { FurnitureType, furnitures } from "@/data/furniture.data";
+import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaCodeCompare } from "react-icons/fa6";
 
-type ProductCardProps = {
-	id: number;
-};
-
-function ProductCard({ id }: ProductCardProps) {
-	const product: FurnitureType = furnitures.filter((chair: FurnitureType) => chair.id === id)[0];
+function ProductCard({ product }: {product:Product}) {
 	return (
 		<>
 			<div className="card card-compact bg-base-200 shadow-md w-full rounded-md relative group">
 				<figure>
 					<Image
-						src={`/chairs/${product.img}`}
+						src={`/furniture/${product.image}-1.avif`}
 						height={400}
 						width={400}
 						alt="Chair"
-						className="aspect-[4/5] object-cover group-hover:scale-110 transition-all ease-in-out duration-700"
+						className="aspect-square object-cover group-hover:scale-110 transition-all ease-in-out duration-700"
 					/>
 				</figure>
 				<div className="card-body">
@@ -50,7 +46,7 @@ function ProductCard({ id }: ProductCardProps) {
                         <button className="btn btn-primary-dark">Buy Now</button>
                     </div> */}
 				</div>
-				<div className="hidden group-hover:flex flex-col gap-4 absolute w-full aspect-[4/5] bg-transparent group-hover:bg-black/70 items-center justify-center transition- ease-in-out duration-700">
+				<div className="hidden group-hover:flex flex-col gap-4 absolute w-full aspect-square bg-transparent group-hover:bg-black/70 items-center justify-center transition- ease-in-out duration-700">
 					<Link href={`/product/${product.id}`} className="btn btn-primary-dark border-0">Add to Cart</Link>
 					<div className="options flex-center text-white gap-2">
 						<button className="btn btn-ghost">

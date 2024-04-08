@@ -5,9 +5,9 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";
-import { furnitures } from "@/data/furniture.data";
 import Image from "next/image";
 import { GiSettingsKnobs } from "react-icons/gi";
+import { Product } from "@prisma/client";
 
 function Products() {
 	const [livingRoomFlag, setLivingRoomFlag] = useState(true);
@@ -15,20 +15,47 @@ function Products() {
 	const [bedroomFlag, setBedroomFlag] = useState(true);
 	const [kitchenFlag, setKitchenFlag] = useState(true);
 	const [officeFlag, setOfficeFlag] = useState(true);
+	const [products, setProducts] = useState<Product[]>([
+		{
+			id: 0,
+			categoryId: 0,
+			name: "",
+			price: 0,
+			description: "",
+			location: "",
+			image: "sofa/sofa-1",
+			imageCount: 0,
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		},
+	]);
+
+	const fetchData = () => {
+		fetch("http://localhost:3000/api")
+			.then(res => res.json())
+			.then(data => {
+				setProducts(data.products);
+			})
+			.catch(err => console.error(err));
+		return mapProducts();
+	};
 
 	const mapProducts = () => {
-		return furnitures.map(item => {
+		return products.map(item => {
+			/*
 			if (item.location.indexOf("living-room") != -1 && livingRoomFlag) {
-				return <ProductCard key={item.id} id={item.id} />;
+				return <ProductCard key={item.id} product={item} />;
 			} else if (item.location.indexOf("study-room") != -1 && studyRoomFlag) {
-				return <ProductCard key={item.id} id={item.id} />;
+				return <ProductCard key={item.id} product={item} />;
 			} else if (item.location.indexOf("kitchen") != -1 && kitchenFlag) {
-				return <ProductCard key={item.id} id={item.id} />;
+				return <ProductCard key={item.id} product={item} />;
 			} else if (item.location.indexOf("office") != -1 && officeFlag) {
-				return <ProductCard key={item.id} id={item.id} />;
+				return <ProductCard key={item.id} product={item} />;
 			} else if (item.location.indexOf("bedroom") != -1 && bedroomFlag) {
-				return <ProductCard key={item.id} id={item.id} />;
+				return <ProductCard key={item.id} product={item} />;
 			}
+			*/
+			return <ProductCard key={item.id} product={item} />;
 		});
 	};
 	return (
@@ -113,7 +140,7 @@ function Products() {
 								</label>
 							</ul>
 						</details>
-						| Showing 1-8 of {furnitures.length} results
+						| Showing 1-8 of {products.length} results
 					</div>
 					<div className="right flex-center gap-2">
 						<span>Show</span>
@@ -131,7 +158,7 @@ function Products() {
 			<div className="w-full">
 				<div className="md:container px-4 md:px-0">
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-8 my-10">
-						{mapProducts()}
+						{fetchData()}
 					</div>
 				</div>
 			</div>
