@@ -34,7 +34,7 @@ function Products() {
 		fetch("http://localhost:3000/api")
 			.then(res => res.json())
 			.then(data => {
-				setProducts(data.products);
+				setProducts(data.data);
 			})
 			.catch(err => console.error(err));
 		return mapProducts();
