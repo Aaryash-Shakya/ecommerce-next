@@ -7,7 +7,7 @@ export default function Footer() {
 		<>
 			<div className="w-full bg-base-200">
 				<div className="md:container">
-					<footer className="footer p-10 text-base-content">
+					<footer className="footer p-10 text-base-content grid-flow-row grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
 						<nav>
 							<h6 className="mb-2 text-primary-dark font-bold text-lg">My Account</h6>
 							<a className="link link-hover">Sign in</a>
@@ -46,7 +46,7 @@ export default function Footer() {
 						<aside className="items-center grid-flow-col">
 							<GiWoodenChair size={35} className="text-primary-dark" />
 							<p>
-								<span className="font-semibold">Aaryash company Ltd.</span> <br />
+								<span className="font-semibold">HeartWood Ltd.</span> <br />
 								Providing reliable furniture since 2003
 							</p>
 						</aside>

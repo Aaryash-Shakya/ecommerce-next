@@ -1,77 +1,19 @@
 import React from "react";
-
-import Image from "next/image";
+import PopularItem from "./PopularItem";
 
 export default function Popular() {
+	const mapPopularItems = (itemCount: number) => {
+		// randomly initialize a null array of 8 items
+		return Array(itemCount)
+			.fill(null)
+			.map((_, i) => <PopularItem key={i} index={i} itemId={i} />);
+	};
 	return (
 		<>
 			<h2 className="font-playfair text-5xl text-center text-primary-dark font-bold my-4">Popular Products</h2>
 			<div className="w-full grid items-center my-4">
 				<div className="carousel carousel-center w-full max-w-screen-xl p-4 space-x-5 mx-auto border-b-2 border-b-primary-dark">
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-green flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-blue flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-purple flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-orange flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-green flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-blue flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-purple flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
-					<div className="carousel-item">
-						<div className="skeleton p-4 md:p-7 w-64 aspect-[3/4] faint-orange flex flex-col justify-center items-start">
-							<Image src="/blue-chair.png" alt="sofa" width={120} height={0} className="mx-auto" />
-							<p className="mt-4 font-semibold">Premium Sofa</p>
-							<p className="mt-4">Minimal single chair</p>
-							<p className="mt-2 font-semibold">Rs 4000</p>
-						</div>
-					</div>
+					{mapPopularItems(8)}
 				</div>
 			</div>
 		</>
