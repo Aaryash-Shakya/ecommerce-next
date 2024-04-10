@@ -84,9 +84,9 @@ export default function Navbar() {
 							<a title="search">
 								<FaSearch className="cursor-pointer text-xl md:text-2xl hover:text-primary-dark/80" />
 							</a>
-							<a title="cart">
+							<Link href="/cart" title="cart">
 								<FaShoppingCart className="cursor-pointer text-xl md:text-2xl hover:text-primary-dark/80" />
-							</a>
+							</Link>
 							<a title="profile">
 								<FaUser className="cursor-pointer text-xl md:text-2xl hover:text-primary-dark/80" />
 							</a>

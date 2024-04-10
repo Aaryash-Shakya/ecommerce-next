@@ -9,6 +9,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { CiHeart, CiShare2 } from "react-icons/ci";
 import { FaCommentDots, FaMinus, FaPlus } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 
 type ProductProps = {
 	params: {
@@ -47,6 +48,17 @@ function Product({ params }: ProductProps) {
 			})
 			.then(product => setProduct(product));
 	};
+
+	const handleAddToCart = () => {
+		toast.success("Product added successfully.", {
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			theme: "light",
+		});
+		localStorage.setItem(`cart_${product.id}`, JSON.stringify(product));
+	};
 	useEffect(() => {
 		fetchProductById(productId);
 		/*
@@ -58,11 +70,10 @@ function Product({ params }: ProductProps) {
 			else if (selectedImagePrefix === "-4") setSelectedImagePrefix("-banner");
 		}, 1000);
 		*/
-	}, []);
+	}, [productId]);
 	return (
 		<>
 			<Navbar />
-
 			{/* breadcrumbs */}
 			<div className="nav-margin w-full bg-primary-light/40">
 				<div className="md:container text-sm breadcrumbs py-4">
@@ -98,8 +109,8 @@ function Product({ params }: ProductProps) {
 							</div>
 							<div className="flex flex-wrap gap-x-8 gap-y-6 justify-center mx-auto mt-6">
 								<Image
-									height={600}
-									width={600}
+									height={200}
+									width={200}
 									src={`/furniture/${product.image}-banner.avif`}
 									alt="Product1"
 									className={`w-20 cursor-pointer rounded-xl hover:ring-2 hover:ring-gray-800 ${
@@ -108,8 +119,8 @@ function Product({ params }: ProductProps) {
 									onClick={() => setSelectedImagePrefix("-banner")}
 								/>
 								<Image
-									height={600}
-									width={600}
+									height={200}
+									width={200}
 									src={`/furniture/${product.image}-1.avif`}
 									alt="Product1"
 									className={`w-20 cursor-pointer rounded-xl hover:ring-2 hover:ring-gray-800 ${
@@ -118,8 +129,8 @@ function Product({ params }: ProductProps) {
 									onClick={() => setSelectedImagePrefix("-1")}
 								/>
 								<Image
-									height={600}
-									width={600}
+									height={200}
+									width={200}
 									src={`/furniture/${product.image}-2.avif`}
 									alt="Product2"
 									className={`w-20 cursor-pointer rounded-xl hover:ring-2 hover:ring-gray-800 ${
@@ -128,8 +139,8 @@ function Product({ params }: ProductProps) {
 									onClick={() => setSelectedImagePrefix("-2")}
 								/>
 								<Image
-									height={600}
-									width={600}
+									height={200}
+									width={200}
 									src={`/furniture/${product.image}-3.avif`}
 									alt="Product3"
 									className={`w-20 cursor-pointer rounded-xl hover:ring-2 hover:ring-gray-800 ${
@@ -347,6 +358,7 @@ function Product({ params }: ProductProps) {
 								<button
 									type="button"
 									className="min-w-[200px] px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-bold rounded"
+									onClick={handleAddToCart}
 								>
 									Add to cart
 								</button>
@@ -363,7 +375,7 @@ function Product({ params }: ProductProps) {
 	);
 }
 
-function BottomDetails({product}: {product: ProductType}) {
+function BottomDetails({ product }: { product: ProductType }) {
 	return (
 		<>
 			<div className="mt-24 max-w-4xl">
@@ -377,15 +389,11 @@ function BottomDetails({product}: {product: ProductType}) {
 				</ul>
 				<div className="mt-8">
 					<h3 className="text-lg font-bold text-gray-800">Product Description</h3>
-					<p className="text-sm text-gray-400 mt-4">
-						{product.description}
-					</p>
+					<p className="text-sm text-gray-400 mt-4">{product.description}</p>
 				</div>
 				<div className="mt-8">
 					<h3 className="text-lg font-bold text-gray-800">Product Description</h3>
-					<p className="text-sm text-gray-400 mt-4">
-						{product.location.split(":").join(", ")}
-					</p>
+					<p className="text-sm text-gray-400 mt-4">{product.location.split(":").join(", ")}</p>
 				</div>
 				<ul className="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
 					<li>

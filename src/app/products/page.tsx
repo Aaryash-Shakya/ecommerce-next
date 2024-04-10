@@ -42,7 +42,6 @@ function Products() {
 
 	const mapProducts = () => {
 		return products.map(item => {
-			/*
 			if (item.location.indexOf("living-room") != -1 && livingRoomFlag) {
 				return <ProductCard key={item.id} product={item} />;
 			} else if (item.location.indexOf("study-room") != -1 && studyRoomFlag) {
@@ -54,7 +53,6 @@ function Products() {
 			} else if (item.location.indexOf("bedroom") != -1 && bedroomFlag) {
 				return <ProductCard key={item.id} product={item} />;
 			}
-			*/
 			return <ProductCard key={item.id} product={item} />;
 		});
 	};
@@ -98,7 +96,10 @@ function Products() {
 										type="checkbox"
 										defaultChecked
 										className="checkbox"
-										onClick={() => setBedroomFlag(!bedroomFlag)}
+										onClick={() => {
+											setBedroomFlag(!bedroomFlag);
+											window.location.reload();
+										}}
 									/>
 									<span className="label-text">Bedroom</span>
 								</label>
