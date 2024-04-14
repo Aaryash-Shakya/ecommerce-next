@@ -17,6 +17,11 @@ type ProductProps = {
 	};
 };
 
+type CartItem = {
+	productId: string;
+	quantity: string;
+};
+
 function Product({ params }: ProductProps) {
 	const [quantity, setQuantity] = useState(1);
 	const [selectedImagePrefix, setSelectedImagePrefix] = useState("-banner");
@@ -57,7 +62,9 @@ function Product({ params }: ProductProps) {
 			closeOnClick: true,
 			theme: "light",
 		});
-		localStorage.setItem(`cart_${product.id}`, JSON.stringify(product));
+		const cart:CartItem[] = JSON.parse(localStorage.getItem("cart")|| '[]');
+		cart.push({ productId: product.id.toString(), quantity: quantity.toString() });
+		localStorage.setItem("cart", JSON.stringify(cart));
 	};
 	useEffect(() => {
 		fetchProductById(productId);

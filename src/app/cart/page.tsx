@@ -25,15 +25,9 @@ const Cart = () => {
 	]);
 
 	const fetchLocal = () => {
-		const productArray: Product[] = [];
-		for (let i = 1; i <= 12; i++) {
-			let product: string | null = localStorage.getItem(`cart_${i}`);
-			let JSONproduct: Product | null = product ? JSON.parse(product) : null;
-			if (JSONproduct != null) {
-				productArray.push(JSONproduct);
-			}
-		}
-		setProducts(productArray);
+		const cart = JSON.parse(localStorage.getItem("cart") || '[]');
+		// fetch product using the id and map
+		setProducts(cart);
 	};
 
 	useEffect(() => {
