@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 .btn-primary-light {
-	@apply bg-primary-light text-white hover:bg-primary-dark;
+    @apply bg-primary-light text-white hover:bg-primary-dark;
 }
 .btn-primary-dark {
-	@apply bg-primary-dark text-white hover:bg-[#053738];
+    @apply bg-primary-dark text-white hover:bg-[#053738];
 }
 .flex-center {
-	@apply flex items-center justify-center;
+    @apply flex items-center justify-center;
 }
 .nav-margin {
-	@apply mt-[64px] lg:mt-[78px];
+    @apply mt-[64px] lg:mt-[78px];
 }

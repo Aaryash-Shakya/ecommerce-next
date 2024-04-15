@@ -7,20 +7,20 @@ import Popular from "@/components/Popular";
 import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
-	return (
-		<>
-			{/* fixed top navigation */}
-			<Navbar />
+    return (
+        <>
+            {/* fixed top navigation */}
+            <Navbar />
 
-			{/* landing hero */}
-			<Hero />
-			<Explore />
-			<Popular />
-			<Features />
-			<Testimonials />
+            {/* landing hero */}
+            <Hero />
+            <Explore />
+            <Popular />
+            <Features />
+            <Testimonials />
 
-			{/* footer */}
-			<Footer />
-		</>
-	);
+            {/* footer */}
+            <Footer />
+        </>
+    );
 }
