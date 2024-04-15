@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 const playfair = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "HeartWood",
+	title: "HeartWood - Home",
 	description: "Luxury Furniture E-commerce",
 };
 

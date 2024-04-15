@@ -41,17 +41,9 @@ function Product({ params }: ProductProps) {
 	const { productId } = params;
 
 	const fetchProductById = (productId: string) => {
-		fetch(`http://localhost:3000/api`)
+		fetch(`http://localhost:3000/api/product/${productId}`)
 			.then(res => res.json())
-			.then((data: { data: ProductType[] }) => {
-				for (let x of data.data) {
-					if (x.id == parseInt(productId)) {
-						return x;
-					}
-				}
-				return data.data[0];
-			})
-			.then(product => setProduct(product));
+			.then(product => setProduct(product.data));
 	};
 
 	const handleAddToCart = () => {
@@ -62,7 +54,7 @@ function Product({ params }: ProductProps) {
 			closeOnClick: true,
 			theme: "light",
 		});
-		const cart:CartItem[] = JSON.parse(localStorage.getItem("cart")|| '[]');
+		const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
 		cart.push({ productId: product.id.toString(), quantity: quantity.toString() });
 		localStorage.setItem("cart", JSON.stringify(cart));
 	};
