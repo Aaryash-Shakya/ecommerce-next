@@ -9,7 +9,7 @@ import { FaCodeCompare } from "react-icons/fa6";
 function ProductCard({ product }: { product: Product }) {
     return (
         <>
-            <div className="group card card-compact relative w-full rounded-md bg-base-200 shadow-md">
+            <div className="group card card-compact relative w-full rounded-md bg-base-200 shadow-lg">
                 <figure>
                     <Image
                         src={`/furniture/${product.image}-1.avif`}
@@ -58,7 +58,7 @@ function ProductCard({ product }: { product: Product }) {
                         <button className="btn btn-primary-dark">Buy Now</button>
                     </div> */}
                 </div>
-                <div className="transition- absolute hidden aspect-square w-full flex-col items-center justify-center gap-4 bg-transparent duration-700 ease-in-out group-hover:flex group-hover:bg-black/70">
+                <div className="transition-all absolute hidden aspect-square w-full flex-col items-center justify-center gap-4 bg-transparent duration-700 ease-in-out group-hover:flex group-hover:bg-black/70 rounded-t">
                     <Link
                         href={`/product/${product.id}`}
                         className="btn-primary-dark btn border-0"

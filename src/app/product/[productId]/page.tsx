@@ -9,7 +9,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { CiHeart, CiShare2 } from "react-icons/ci";
 import { FaCommentDots, FaMinus, FaPlus } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 type ProductProps = {
     params: {

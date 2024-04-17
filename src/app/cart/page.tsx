@@ -9,10 +9,6 @@ import React, { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
 
-export const metadata: Metadata = {
-    title: "Cart",
-};
-
 const Cart = () => {
     const [products, setProducts] = useState<Product[]>([
         {
@@ -28,6 +24,9 @@ const Cart = () => {
             updatedAt: new Date(),
         },
     ]);
+    const [subtotal, setSubtotal] = useState(0);
+    const [shipping, setShipping] = useState(0);
+    const [total, setTotal] = useState(0);
 
     const fetchLocal = () => {
         const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -37,7 +36,7 @@ const Cart = () => {
 
     useEffect(() => {
         fetchLocal();
-    });
+    },[]);
 
     const mapProducts = () => {
         return products.map((item) => {
@@ -108,24 +107,18 @@ const Cart = () => {
                                 <li className="text-md flex flex-wrap gap-4 py-3">
                                     Subtotal{" "}
                                     <span className="ml-auto font-bold">
-                                        $44.00
+                                        Rs {subtotal}
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3">
                                     Shipping{" "}
                                     <span className="ml-auto font-bold">
-                                        $4.00
-                                    </span>
-                                </li>
-                                <li className="text-md flex flex-wrap gap-4 py-3">
-                                    Tax{" "}
-                                    <span className="ml-auto font-bold">
-                                        $4.00
+                                        Rs {shipping}
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3 font-bold">
                                     Total{" "}
-                                    <span className="ml-auto">$52.00</span>
+                                    <span className="ml-auto">Rs {total}</span>
                                 </li>
                             </ul>
                             <button
