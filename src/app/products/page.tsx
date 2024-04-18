@@ -8,6 +8,7 @@ import ProductCard from "./ProductCard";
 import Image from "next/image";
 import { GiSettingsKnobs } from "react-icons/gi";
 import { Product } from "@prisma/client";
+import { ProductApiClient } from "@/apiClients/ProductApiClient";
 
 function Products() {
     const [livingRoomFlag, setLivingRoomFlag] = useState(true);
@@ -31,10 +32,9 @@ function Products() {
     ]);
 
     const fetchData = () => {
-        fetch("http://localhost:3000/api/products")
-            .then((res) => res.json())
-            .then((data) => {
-                setProducts(data.data);
+        ProductApiClient.getAllProducts()
+            .then((res) => {
+                setProducts(res.data);
             })
             .catch((err) => console.error(err));
         return mapProducts();

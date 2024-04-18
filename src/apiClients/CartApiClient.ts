@@ -26,11 +26,9 @@ export class CartApiClient {
                 },
             })
             .then((res) => {
-                console.log(res.data.message);
                 return res.data;
             })
             .catch((err) => {
-                console.log(err);
                 return err.response.data;
             });
     }

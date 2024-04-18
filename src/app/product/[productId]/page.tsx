@@ -1,6 +1,7 @@
 "use client";
 
 import { CartApiClient } from "@/apiClients/CartApiClient";
+import { ProductApiClient } from "@/apiClients/ProductApiClient";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Product as ProductType } from "@prisma/client";
@@ -36,9 +37,16 @@ function Product({ params }: ProductProps) {
     const { productId } = params;
 
     const fetchProductById = (productId: string) => {
-        fetch(`http://localhost:3000/api/product/${productId}`)
-            .then((res) => res.json())
-            .then((product) => setProduct(product.data));
+        ProductApiClient.getProductById({
+            productId: parseInt(productId),
+        })
+            .then((res) => {
+                setProduct(res.data as ProductType);
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.error("Something went wrong");
+            });
     };
 
     const handleAddToCart = () => {
