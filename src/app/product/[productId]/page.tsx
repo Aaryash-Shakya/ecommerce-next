@@ -44,7 +44,7 @@ function Product({ params }: ProductProps) {
                 setProduct(res.data as ProductType);
                 console.log(res.data);
             })
-            .catch((err) => {
+            .catch(() => {
                 console.error("Something went wrong");
             });
     };

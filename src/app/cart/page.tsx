@@ -3,7 +3,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Product } from "@prisma/client";
-import { Metadata } from "next";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";

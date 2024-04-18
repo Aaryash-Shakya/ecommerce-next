@@ -6,7 +6,7 @@ type PopularItemPropsType = {
     itemId: number;
 };
 
-const PopularItem: React.FC<PopularItemPropsType> = ({ index, itemId }) => {
+const PopularItem: React.FC<PopularItemPropsType> = ({ index }) => {
     return (
         <div className="carousel-item">
             <div

@@ -1,5 +1,4 @@
-import { Product } from "@prisma/client";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export class ProductApiClient {
     static async getAllProducts() {
@@ -17,7 +16,6 @@ export class ProductApiClient {
         return axios
             .get(`http://localhost:3000/api/product/${data.productId}`)
             .then((res) => {
-                console.log(res.data);
                 return res.data;
             })
             .catch((err) => {
