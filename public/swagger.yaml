@@ -1,0 +1,212 @@
+swagger: "2.0"
+info:
+    description: "This is a swagger documentation of API in HeartWood E-commerce"
+    version: "1.0.7"
+    title: "HeartWood E-commerce API Documentation"
+    contact:
+        email: "apiteam@swagger.io"
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:3000"
+basePath: "/api"
+tags:
+    - name: "User"
+      description: "Operations about user"
+    - name: "Category"
+      description: "Operations about category"
+    - name: "Product"
+      description: "Operations about product"
+    - name: "Cart"
+      description: "Operations about cart"
+schemes:
+    - "https"
+    - "http"
+paths:
+    /products:
+        get:
+            tags:
+                - "Product"
+            summary: "Get all products"
+            description: "Fetch all products in database"
+            consumes:
+                - "application/json"
+            produces:
+                - "application/json"
+            responses:
+                default:
+                    description: "successful operation"
+    /product/{productId}:
+        get:
+            tags:
+                - "Product"
+            summary: "Get product by id"
+            description: "Fetch one product by id"
+            consumes:
+                - "application/json"
+            produces:
+                - "application/json"
+            parameters:
+                - in: path
+                  name: "productId"
+                  description: "ID of the product"
+                  required: true
+                  type: integer
+    /cart/get-items/{userId}:
+        get:
+            tags:
+                - "Cart"
+            summary: "Get cart items but userId"
+            description: "Fetch all cart items of a user"
+            consumes:
+                - "application/json"
+            produces:
+                - "application/json"
+            parameters:
+                - in: path
+                  name: "userId"
+                  description: "ID of the user"
+                  required: true
+                  type: integer
+            responses:
+                default:
+                    description: "successful operation"
+    /cart/add-item:
+        post:
+            tags:
+                - "Cart"
+            summary: "Add item to user's cart"
+            description: "Add an item to user's cart"
+            consumes:
+                - "application/json"
+            produces:
+                - "application/json"
+            parameters:
+                - in: body
+                  name: "userId"
+                  description: "ID of the user"
+                  required: true
+                  schema:
+                    type: integer
+                - in: body
+                  name: "productId"
+                  description: "ID of the product"
+                  required: true
+                  schema:
+                    type: integer
+                - in: body
+                  name: "quantity"
+                  description: "quantity of product"
+                  required: true
+                  schema:
+                    type: integer
+definitions:
+    ApiResponse:
+        type: "object"
+        properties:
+            code:
+                type: "integer"
+            type:
+                type: "string"
+            message:
+                type: "string"
+    Category:
+        type: object
+        properties:
+            id:
+                type: integer
+            name:
+                type: string
+            createdAt:
+                type: string
+                format: date-time
+            updatedAt:
+                type: string
+                format: date-time
+            Product:
+                type: array
+                items:
+                    $ref: "#/definitions/Product"
+
+    Product:
+        type: object
+        properties:
+            id:
+                type: integer
+            category:
+                $ref: "#/definitions/Category"
+            categoryId:
+                type: integer
+            name:
+                type: string
+            price:
+                type: number
+                format: float
+            description:
+                type: string
+            image:
+                type: string
+            imageCount:
+                type: integer
+            location:
+                type: string
+            createdAt:
+                type: string
+                format: date-time
+            updatedAt:
+                type: string
+                format: date-time
+            Cart:
+                type: array
+                items:
+                    $ref: "#/definitions/Cart"
+
+    User:
+        type: object
+        properties:
+            id:
+                type: integer
+            email:
+                type: string
+            password:
+                type: string
+            name:
+                type: string
+            role:
+                type: string
+            createdAt:
+                type: string
+                format: date-time
+            updatedAt:
+                type: string
+                format: date-time
+            Cart:
+                type: array
+                items:
+                    $ref: "#/definitions/Cart"
+
+    Cart:
+        type: object
+        properties:
+            id:
+                type: integer
+            user:
+                $ref: "#/definitions/User"
+            userId:
+                type: integer
+            product:
+                $ref: "#/definitions/Product"
+            productId:
+                type: integer
+            quantity:
+                type: integer
+            createdAt:
+                type: string
+                format: date-time
+            updatedAt:
+                type: string
+                format: date-time
+
+externalDocs:
+    description: "Find out more about Swagger"
+    url: "http://swagger.io"
