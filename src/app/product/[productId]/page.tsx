@@ -1,8 +1,8 @@
 "use client";
 
+import { CartApiClient } from "@/apiClients/CartApiClient";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { FurnitureType, furnitures } from "@/data/furniture.data";
 import { Product as ProductType } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,11 +15,6 @@ type ProductProps = {
     params: {
         productId: string;
     };
-};
-
-type CartItem = {
-    productId: string;
-    quantity: string;
 };
 
 function Product({ params }: ProductProps) {
@@ -47,21 +42,29 @@ function Product({ params }: ProductProps) {
     };
 
     const handleAddToCart = () => {
-        toast.success("Product added successfully.", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            theme: "light",
-        });
-        const cart: CartItem[] = JSON.parse(
-            localStorage.getItem("cart") || "[]",
-        );
-        cart.push({
-            productId: product.id.toString(),
-            quantity: quantity.toString(),
-        });
-        localStorage.setItem("cart", JSON.stringify(cart));
+        CartApiClient.addToCart({
+            userId: 1,
+            productId: product.id,
+            quantity: quantity,
+        })
+            .then((res) => {
+                toast.success(res.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    theme: "light",
+                });
+            })
+            .catch((err) => {
+                toast.error(err.message || "Failed to add to cart.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    theme: "light",
+                });
+            });
     };
     useEffect(() => {
         fetchProductById(productId);
@@ -306,7 +309,7 @@ function Product({ params }: ProductProps) {
                                     <input
                                         type="text"
                                         value={quantity}
-                                        className="h-14 w-14 border text-center"
+                                        className="h-14 w-14 border text-center text-xl"
                                     />
                                     <button
                                         className="flex-center h-14 w-14 rounded-br-md rounded-tr-md border hover:bg-slate-200"

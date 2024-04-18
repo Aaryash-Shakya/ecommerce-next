@@ -1,4 +1,3 @@
-import { FurnitureType, furnitures } from "@/data/furniture.data";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
