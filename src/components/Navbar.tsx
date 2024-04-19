@@ -9,6 +9,13 @@ import { HiMenuAlt1 } from "react-icons/hi";
 
 export default function Navbar() {
     const pathname = usePathname();
+    const navLinks = [
+        { name: "Home", href: "/" },
+        { name: "Products", href: "/products" },
+        { name: "Categories", href: "/categories" },
+        { name: "About", href: "/about" },
+        { name: "Contact", href: "/contact" },
+    ];
     return (
         <>
             <div className="glass fixed left-0 top-0 z-10 w-full">
@@ -27,46 +34,23 @@ export default function Navbar() {
                                     tabIndex={0}
                                     className="menu dropdown-content menu-md z-[10] mt-3 w-[90vw] max-w-md rounded-box bg-base-200 p-2 text-lg underline-offset-4 shadow"
                                 >
-                                    <li>
-                                        <Link
-                                            href="/"
-                                            className="font-bold underline"
-                                        >
-                                            Home
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="/products"
-                                            className="hover:underline"
-                                        >
-                                            Products
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="#"
-                                            className="hover:underline"
-                                        >
-                                            Categories
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="#"
-                                            className="hover:underline"
-                                        >
-                                            About
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="#"
-                                            className="hover:underline"
-                                        >
-                                            Contact
-                                        </Link>
-                                    </li>
+                                    {navLinks.map((link) => {
+                                        const isActive = pathname === link.href;
+                                        return (
+                                            <li key={link.name}>
+                                                <Link
+                                                    href={link.href}
+                                                    className={
+                                                        isActive
+                                                            ? "font-bold underline"
+                                                            : "hover:underline"
+                                                    }
+                                                >
+                                                    {link.name}
+                                                </Link>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             </div>
                             <a className="btn btn-ghost text-xl">
@@ -76,37 +60,23 @@ export default function Navbar() {
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu menu-horizontal space-x-3 px-1 font-playfair text-xl underline-offset-4">
-                                <li>
-                                    <Link
-                                        href="/"
-                                        className="font-bold underline"
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/products"
-                                        className="hover:underline"
-                                    >
-                                        Products
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#" className="hover:underline">
-                                        Categories
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#" className="hover:underline">
-                                        About
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#" className="hover:underline">
-                                        Contact
-                                    </Link>
-                                </li>
+                                {navLinks.map((link) => {
+                                    const isActive = pathname === link.href;
+                                    return (
+                                        <li key={link.name}>
+                                            <Link
+                                                href={link.href}
+                                                className={
+                                                    isActive
+                                                        ? "font-bold underline"
+                                                        : "hover:underline"
+                                                }
+                                            >
+                                                {link.name}
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                         <div className="navbar-end me-4 flex gap-4 md:gap-6 xl:gap-10">

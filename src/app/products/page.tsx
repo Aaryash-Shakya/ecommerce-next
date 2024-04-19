@@ -3,7 +3,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import Image from "next/image";
 import { GiSettingsKnobs } from "react-icons/gi";
@@ -37,7 +37,6 @@ function Products() {
                 setProducts(res.data);
             })
             .catch((err) => console.error(err));
-        return mapProducts();
     };
 
     const mapProducts = () => {
@@ -59,6 +58,9 @@ function Products() {
             return <ProductCard key={item.id} product={item} />;
         });
     };
+    useEffect(() => {
+        fetchData();
+    },[])
     return (
         <>
             <Navbar />
@@ -178,7 +180,7 @@ function Products() {
             <div className="w-full">
                 <div className="px-4 md:container md:px-0">
                     <div className="my-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10">
-                        {fetchData()}
+                        {mapProducts()}
                     </div>
                 </div>
             </div>
