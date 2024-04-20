@@ -70,8 +70,8 @@ const Cart = () => {
             const itemTotal = cartItem.product.price * cartItem.quantity;
             return (
                 <>
-                    <div className="flex w-full items-start justify-between gap-4 py-8">
-                        <div className="aspect-square h-64 w-64 rounded bg-gray-100 p-3">
+                    <div className="flex w-full items-start justify-between gap-2 py-4 sm:py-8 sm:gap-4">
+                        <div className="aspect-square h-40 w-40 rounded bg-gray-100 p-3 sm:h-64 sm:w-64">
                             <Image
                                 height={600}
                                 width={600}
@@ -80,17 +80,17 @@ const Cart = () => {
                                 className="h-full w-full shrink-0 rounded-lg object-contain"
                             />
                         </div>
-                        <div className="relative flex h-64 w-full flex-col p-4">
+                        <div className="relative flex h-40 w-full flex-col p-2 sm:h-64 sm:p-4">
                             <p className="text-2xl font-bold text-primary-dark">
                                 {cartItem.product.name}
                             </p>
-                            <h4 className="mt-4 text-lg font-bold text-primary-dark">
+                            <h4 className="mt-2 font-bold text-primary-light">
                                 Rs {cartItem.product.price}
                             </h4>
-                            <div className="bottom mb-0 mt-auto flex items-center justify-between">
+                            <div className="bottom mb-0 mt-auto flex flex-col items-end justify-between sm:flex-row sm:items-center">
                                 <div className="flex-center w-fit gap-0">
                                     <button
-                                        className={`flex-center h-10 w-10 rounded-bl-md rounded-tl-md border hover:bg-slate-200 ${
+                                        className={`flex-center h-7 w-7 rounded-bl-md rounded-tl-md border hover:bg-slate-200 sm:h-10 sm:w-10 ${
                                             cartItem.quantity == 1 &&
                                             "cursor-not-allowed"
                                         }`}
@@ -100,13 +100,13 @@ const Cart = () => {
                                     <input
                                         type="text"
                                         value={cartItem.quantity}
-                                        className="h-10 w-10 border text-center text-xl"
+                                        className="h-7 w-7 border text-center text-xl sm:h-10 sm:w-10"
                                     />
-                                    <button className="flex-center h-10 w-10 rounded-br-md rounded-tr-md border hover:bg-slate-200">
+                                    <button className="flex-center h-7 w-7 rounded-br-md rounded-tr-md border hover:bg-slate-200 sm:h-10 sm:w-10">
                                         <FaPlus />
                                     </button>
                                 </div>
-                                <div className="itemTotal text-2xl font-bold text-primary-dark">
+                                <div className="itemTotal text-xl font-bold text-primary-dark">
                                     Rs {itemTotal}
                                 </div>
                             </div>
@@ -124,12 +124,12 @@ const Cart = () => {
     return (
         <>
             <Navbar />
-            <div className="bg-white font-[sans-serif]">
-                <div className="mx-auto max-w-xl lg:max-w-7xl">
-                    <h2 className="text-3xl font-extrabold text-[#333]">
+            <div className="nav-margin bg-white font-[sans-serif]">
+                <div className="container">
+                    <h2 className="text-3xl font-extrabold text-[#333] pt-4">
                         Shopping Cart
                     </h2>
-                    <div className="mt-8 grid items-start gap-8 lg:grid-cols-3">
+                    <div className="grid items-start gap-8 lg:grid-cols-3">
                         <div className="divide-y lg:col-span-2">
                             {/* data here */}
                             {mapCartItems()}

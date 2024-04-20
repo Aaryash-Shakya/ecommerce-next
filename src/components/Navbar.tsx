@@ -53,10 +53,10 @@ export default function Navbar() {
                                     })}
                                 </ul>
                             </div>
-                            <a className="btn btn-ghost text-xl">
+                            <Link href="/" className="btn btn-ghost text-xl">
                                 <GiWoodenChair size={25} />
                                 HeartWood
-                            </a>
+                            </Link>
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu menu-horizontal space-x-3 px-1 font-playfair text-xl underline-offset-4">
