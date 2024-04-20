@@ -13,6 +13,9 @@ export async function GET(req: NextRequest, { params }: ParamsType) {
         where: {
             userId: userId,
         },
+        include: {
+            product: true,
+        }
     });
 
     // if cart is empty
