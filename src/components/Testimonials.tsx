@@ -83,39 +83,42 @@ export default function Testimonials() {
     );
 }
 
-function TestimonialContent() {
-    const testimonialData: TestimonialType[] = testimonials;
-    return testimonialData.map((testimonial, index) => (
-        <SwiperSlide key={index}>
-            <div className="mx-auto flex max-w-screen-xl flex-col gap-4 p-8 md:flex-row md:gap-x-6 md:p-2 lg:gap-x-16">
-                <div className="img-container relative mx-auto w-full overflow-hidden ps-12 pt-12 md:w-1/3 lg:w-1/4">
-                    <Image
-                        src={`/testimonials${testimonial.image}`}
-                        height={500}
-                        width={500}
-                        alt={testimonial.name}
-                        className="rounded-3xl object-cover"
-                    />
-                    <BiSolidQuoteLeft className="absolute left-0 top-0 text-9xl text-faint-blue saturate-200" />
-                </div>
-                <div className="testimonial-content relative flex w-full flex-col justify-evenly pt-5 md:w-2/3 md:px-2 lg:w-3/4">
-                    <div className="message mb-4 text-base text-primary-dark/85 lg:text-lg">
-                        {testimonial.message}
-                    </div>
+// ! fix: returned mapped data didn't work
+// ref https://github.com/kidjp85/react-id-swiper/issues/404
+// ref https://stackoverflow.com/questions/64179647/why-does-my-map-function-break-swiperjs-component-in-react
+// function TestimonialContent() {
+//     const testimonialData: TestimonialType[] = testimonials;
+//     return testimonialData.map((testimonial, index) => (
+//         <SwiperSlide key={index}>
+//             <div className="mx-auto flex max-w-screen-xl flex-col gap-4 p-8 md:flex-row md:gap-x-6 md:p-2 lg:gap-x-16">
+//                 <div className="img-container relative mx-auto w-full overflow-hidden ps-12 pt-12 md:w-1/3 lg:w-1/4">
+//                     <Image
+//                         src={`/testimonials${testimonial.image}`}
+//                         height={500}
+//                         width={500}
+//                         alt={testimonial.name}
+//                         className="rounded-3xl object-cover"
+//                     />
+//                     <BiSolidQuoteLeft className="absolute left-0 top-0 text-9xl text-faint-blue saturate-200" />
+//                 </div>
+//                 <div className="testimonial-content relative flex w-full flex-col justify-evenly pt-5 md:w-2/3 md:px-2 lg:w-3/4">
+//                     <div className="message mb-4 text-base text-primary-dark/85 lg:text-lg">
+//                         {testimonial.message}
+//                     </div>
 
-                    <div className="contact">
-                        <p className="font-bold text-primary-dark">
-                            {testimonial.name || "Anonymous"}
-                        </p>
-                        <p className="text-primary-light">
-                            {testimonial.company || "unknown"}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </SwiperSlide>
-    ));
-}
+//                     <div className="contact">
+//                         <p className="font-bold text-primary-dark">
+//                             {testimonial.name || "Anonymous"}
+//                         </p>
+//                         <p className="text-primary-light">
+//                             {testimonial.company || "unknown"}
+//                         </p>
+//                     </div>
+//                 </div>
+//             </div>
+//         </SwiperSlide>
+//     ));
+// }
 
 function TestimonialNavButton() {
     const swiperMethod = useSwiper();
