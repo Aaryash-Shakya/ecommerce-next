@@ -7,6 +7,19 @@ export async function POST(req: NextRequest) {
     const productId = parseInt(formData.get("productId") as string);
     const quantity = parseInt(formData.get("quantity") as string);
 
+    // if user doesn't exist
+    const existingUser = await prisma.user.findUnique({
+        where: {
+            id: userId,
+        },
+    });
+    if (!existingUser) {
+        return NextResponse.json(
+            { message: "User not found" },
+            { status: 404 },
+        );
+    }
+
     // if item already exists in cart, update quantity
     const existingItem = await prisma.cart.findFirst({
         where: {
