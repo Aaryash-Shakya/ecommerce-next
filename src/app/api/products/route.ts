@@ -4,5 +4,5 @@ import { NextResponse } from "next/server";
 export async function GET() {
 	return NextResponse.json({
 		data: await prisma.product.findMany(),
-	});
+	},{status: 400});
 }

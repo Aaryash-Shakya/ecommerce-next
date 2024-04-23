@@ -41,11 +41,11 @@ function Product({ params }: ProductProps) {
             productId: parseInt(productId),
         })
             .then((res) => {
-                setProduct(res.data as ProductType);
-                console.log(res.data);
+                if(res.status != 200) throw new Error("Error fetching product by id");
+                setProduct(res.data.data as ProductType);
             })
-            .catch(() => {
-                console.error("Something went wrong");
+            .catch((err:Error) => {
+                throw err
             });
     };
 

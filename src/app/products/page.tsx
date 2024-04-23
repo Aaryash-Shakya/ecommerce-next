@@ -34,9 +34,13 @@ function Products() {
     const fetchData = () => {
         ProductApiClient.getAllProducts()
             .then((res) => {
-                setProducts(res.data);
+                if (res.status != 200)
+                    throw new Error("Error fetching products");
+                setProducts(res.data.data);
             })
-            .catch((err) => console.error(err));
+            .catch((err: Error) => {
+                throw err
+            });
     };
 
     const mapProducts = () => {
@@ -60,7 +64,7 @@ function Products() {
     };
     useEffect(() => {
         fetchData();
-    },[])
+    }, []);
     return (
         <>
             <Navbar />
