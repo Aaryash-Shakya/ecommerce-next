@@ -1,7 +1,7 @@
 "use client";
 
-function ErrorBoundary({error}: {error: Error}) {
-    return <div>{error.message}</div>;
+function ErrorBoundary() {
+    return <div>Error fetching products</div>;
 }
 
 export default ErrorBoundary;

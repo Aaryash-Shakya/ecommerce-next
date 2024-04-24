@@ -1,12 +1,12 @@
 import Navbar from "@/components/Navbar";
 import React from "react";
 
-function loading() {
+function Loading() {
     return (
         <>
             <Navbar />
-            <div className="grid h-screen w-screen place-content-center">
-                <div className="flex gap-2">
+            <div className="grid h-full w-full place-content-center">
+                <div className="flex-center gap-2 w-full">
                     <div className="dots"></div>
                     <div className="dots"></div>
                     <div className="dots"></div>
@@ -18,4 +18,4 @@ function loading() {
     );
 }
 
-export default loading;
+export default Loading;
