@@ -15,7 +15,6 @@ function Products() {
     const [bedroomFlag, setBedroomFlag] = useState(true);
     const [kitchenFlag, setKitchenFlag] = useState(true);
     const [officeFlag, setOfficeFlag] = useState(true);
-
     // const mapProducts = () => {
     //     return products.map((item) => {
     //         if (item.location.indexOf("living-room") != -1 && livingRoomFlag) {
@@ -35,6 +34,7 @@ function Products() {
     //         return <ProductCard key={item.id} product={item} />;
     //     });
     // };
+    // throw new Error("Error in test function");
     return (
         <>
             <Navbar />
