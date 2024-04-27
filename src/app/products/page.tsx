@@ -1,40 +1,23 @@
-"use client";
+"use client"
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import { GiSettingsKnobs } from "react-icons/gi";
 import ProductList from "./ProductList";
 import Loading from "../loading";
 
-function Products() {
-    const [livingRoomFlag, setLivingRoomFlag] = useState(true);
-    const [studyRoomFlag, setStudyRoomFlag] = useState(true);
-    const [bedroomFlag, setBedroomFlag] = useState(true);
-    const [kitchenFlag, setKitchenFlag] = useState(true);
-    const [officeFlag, setOfficeFlag] = useState(true);
-    // const mapProducts = () => {
-    //     return products.map((item) => {
-    //         if (item.location.indexOf("living-room") != -1 && livingRoomFlag) {
-    //             return <ProductCard key={item.id} product={item} />;
-    //         } else if (
-    //             item.location.indexOf("study-room") != -1 &&
-    //             studyRoomFlag
-    //         ) {
-    //             return <ProductCard key={item.id} product={item} />;
-    //         } else if (item.location.indexOf("kitchen") != -1 && kitchenFlag) {
-    //             return <ProductCard key={item.id} product={item} />;
-    //         } else if (item.location.indexOf("office") != -1 && officeFlag) {
-    //             return <ProductCard key={item.id} product={item} />;
-    //         } else if (item.location.indexOf("bedroom") != -1 && bedroomFlag) {
-    //             return <ProductCard key={item.id} product={item} />;
-    //         }
-    //         return <ProductCard key={item.id} product={item} />;
-    //     });
-    // };
-    // throw new Error("Error in test function");
+function Products({
+    searchParams,
+}: {
+    // very hacky way
+    searchParams: { [key: string]: string | string[] | undefined };
+}) {
+    const selectedCategories = (searchParams.category || "all" as string);
+    const selectedSortBy = (searchParams.sort || "default") as string;
+    const selectedShow = (searchParams.show || "8") as string;
     return (
         <>
             <Navbar />
@@ -56,6 +39,8 @@ function Products() {
                             <li>
                                 <Link href="#">Products</Link>
                             </li>
+                            <li>{selectedCategories}</li>
+                            <li>{selectedSortBy}</li>
                         </ul>
                     </div>
                 </div>
@@ -75,9 +60,8 @@ function Products() {
                                         type="checkbox"
                                         defaultChecked
                                         className="checkbox"
-                                        onClick={() => {
-                                            setBedroomFlag(!bedroomFlag);
-                                            window.location.reload();
+                                        onClick={()=>{
+
                                         }}
                                     />
                                     <span className="label-text">Bedroom</span>
@@ -87,9 +71,6 @@ function Products() {
                                         type="checkbox"
                                         defaultChecked
                                         className="checkbox"
-                                        onClick={() =>
-                                            setKitchenFlag(!kitchenFlag)
-                                        }
                                     />
                                     <span className="label-text">Kitchen</span>
                                 </label>
@@ -98,9 +79,6 @@ function Products() {
                                         type="checkbox"
                                         defaultChecked
                                         className="checkbox"
-                                        onClick={() =>
-                                            setLivingRoomFlag(!livingRoomFlag)
-                                        }
                                     />
                                     <span className="label-text">
                                         Living Room
@@ -111,9 +89,6 @@ function Products() {
                                         type="checkbox"
                                         defaultChecked
                                         className="checkbox"
-                                        onClick={() =>
-                                            setOfficeFlag(!officeFlag)
-                                        }
                                     />
                                     <span className="label-text">Office</span>
                                 </label>
@@ -122,9 +97,6 @@ function Products() {
                                         type="checkbox"
                                         defaultChecked
                                         className="checkbox"
-                                        onClick={() =>
-                                            setStudyRoomFlag(!studyRoomFlag)
-                                        }
                                     />
                                     <span className="label-text">
                                         Study Room
@@ -132,14 +104,14 @@ function Products() {
                                 </label>
                             </ul>
                         </details>
-                        | Showing 1-8 of {12} results
+                        | Showing 1-{selectedShow} of {12} results
                     </div>
                     <div className="right flex-center gap-2">
                         <span>Show</span>
                         <input
                             type="text"
-                            placeholder="8"
-                            className="input input-bordered aspect-square"
+                            placeholder={selectedShow}
+                            className="input input-bordered w-14 text-center"
                         />
                         <span className="flex-center w-20">| Sort By</span>
                         <select className="select select-bordered w-full max-w-40">
