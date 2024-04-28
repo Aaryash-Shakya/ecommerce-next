@@ -38,10 +38,11 @@ model User {
   email     String   @unique
   password  String
   name      String
-  role      String   @default("USER")
+  role      String   @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   Cart      Cart[]
+  Order     Order[]
 }
 
 model Cart {
@@ -50,9 +51,32 @@ model Cart {
   userId    Int
   product   Product  @relation(fields: [productId], references: [id])
   productId Int
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   Int?
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  payment   Payment? @relation(fields: [paymentId], references: [id])
+  paymentId Int?     @unique
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  cart      Cart[]
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  method    String
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  order     Order?
 }
 
 model Testimonial {
