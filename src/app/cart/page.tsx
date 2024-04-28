@@ -1,8 +1,6 @@
 "use client";
 
 import { CartApiClient } from "@/apiClients/CartApiClient";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 import { Cart as CartType, Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -230,7 +228,6 @@ const Cart = () => {
 
     return (
         <>
-            <Navbar />
             <div className="nav-margin bg-white font-[sans-serif]">
                 <div className="container">
                     <h2 className="pt-4 text-3xl font-extrabold text-[#333]">
@@ -273,7 +270,6 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 };

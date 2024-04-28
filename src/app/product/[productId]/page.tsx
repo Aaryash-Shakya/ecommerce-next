@@ -2,7 +2,6 @@
 
 import { CartApiClient } from "@/apiClients/CartApiClient";
 import { ProductApiClient } from "@/apiClients/ProductApiClient";
-import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { ApiResponse } from "@/types/api";
 import { Product as ProductType } from "@prisma/client";
@@ -359,7 +358,6 @@ function Product({ params }: ProductProps) {
                     <BottomDetails product={product} />
                 </div>
             </div>
-            <Footer />
         </>
     );
 }

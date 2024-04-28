@@ -1,7 +1,5 @@
 "use client";
 
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import Image from "next/image";
@@ -62,7 +60,6 @@ function Products({
 
     return (
         <>
-            <Navbar />
             <div className="nav-margin h-44 w-full overflow-hidden text-sm text-primary-dark md:h-64">
                 <Image
                     src="/banners/banner-1.jpg"
@@ -81,8 +78,6 @@ function Products({
                             <li>
                                 <Link href="#">Products</Link>
                             </li>
-                            <li>{selectedCategories}</li>
-                            <li>{selectedSortBy}</li>
                         </ul>
                     </div>
                 </div>
@@ -194,7 +189,7 @@ function Products({
                         />
                         <span className="flex-center w-20">| Sort By</span>
                         <select
-                            className="select select-bordered w-full max-w-48"
+                            className="select select-bordered w-full max-w-44 px-3"
                             onChange={(e) => {
                                 filters.sort = e.target.value;
                                 router.push(`?${generateNewSearchParams()}`, {
@@ -219,7 +214,6 @@ function Products({
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 }
