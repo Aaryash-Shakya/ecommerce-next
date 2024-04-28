@@ -73,7 +73,6 @@ function Product({ params }: ProductProps) {
                 toast.success(res.message, {
                     position: "top-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
                     closeOnClick: true,
                     theme: "light",
                 });
@@ -82,7 +81,6 @@ function Product({ params }: ProductProps) {
                 toast.error(err.message || "Failed to add to cart.", {
                     position: "top-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
                     closeOnClick: true,
                     theme: "light",
                 });

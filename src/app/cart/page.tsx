@@ -77,6 +77,7 @@ const Cart = () => {
     }, []);
 
     const handleRemoveFromCart = (productId: number) => {
+        if(!confirm("Are you sure you want to remove this item from cart?")) return;
         CartApiClient.removeFromCart({ userId: 1, productId })
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to remove item from cart");
@@ -86,7 +87,6 @@ const Cart = () => {
                 toast.success("Item removed from cart", {
                     position: "top-right",
                     autoClose: 2000,
-                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: false,
                 });
@@ -95,11 +95,50 @@ const Cart = () => {
                 toast.error("Failed to remove item from cart", {
                     position: "top-right",
                     autoClose: 2000,
-                    hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: false,
                 });
                 console.log(err);
+            });
+    };
+
+    // implement increment and decrement quantity
+    const handleQuantityChange = (
+        type: "inc" | "dec",
+        quantity: number,
+        productId: number,
+    ) => {
+        if (type == "inc") {
+            quantity = quantity + 1;
+        } else if (type == "dec" && quantity > 1) {
+            quantity = quantity - 1;
+        } else {
+            return;
+        }
+        CartApiClient.addToCart({
+            userId: 1,
+            productId,
+            quantity: quantity,
+        })
+            .then((res) => {
+                if (!res.ok)
+                    throw new Error(`Failed to ${type}rement quantity`);
+                fetchUserCart();
+                toast.success(`Quantity ${type}remented`, {
+                    position: "top-right",
+                    autoClose: 1500,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(`Failed to ${type}rement quantity`, {
+                    position: "top-right",
+                    autoClose: 1500,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
             });
     };
 
@@ -116,7 +155,7 @@ const Cart = () => {
             return (
                 <>
                     <div className="my-4 flex w-full flex-col items-start justify-between gap-2 bg-gray-50 shadow-md sm:my-8 sm:flex-row sm:gap-4">
-                        <div className="aspect-square h-50 w-full mx-auto rounded bg-gray-200 p-2 sm:h-64 sm:w-64 sm:p-4">
+                        <div className="h-50 mx-auto aspect-square w-full rounded bg-gray-200 p-2 sm:h-64 sm:w-64 sm:p-4">
                             <Image
                                 height={600}
                                 width={600}
@@ -133,7 +172,7 @@ const Cart = () => {
                                 {cartItem.product.name}
                                 <FaExternalLinkAlt />
                             </Link>
-                            <h4 className="mt-2 font-bold text-primary-light">
+                            <h4 className="mt-2 font-bold text-primary-light text-lg">
                                 Rs {cartItem.product.price}
                             </h4>
                             <div className="bottom mb-0 mt-auto flex flex-col items-end justify-between sm:flex-row sm:items-center">
@@ -143,6 +182,13 @@ const Cart = () => {
                                             cartItem.quantity == 1 &&
                                             "cursor-not-allowed"
                                         }`}
+                                        onClick={() =>
+                                            handleQuantityChange(
+                                                "dec",
+                                                cartItem.quantity,
+                                                cartItem.productId,
+                                            )
+                                        }
                                     >
                                         <FaMinus />
                                     </button>
@@ -151,16 +197,25 @@ const Cart = () => {
                                         value={cartItem.quantity}
                                         className="h-7 w-7 border text-center text-xl sm:h-10 sm:w-10"
                                     />
-                                    <button className="flex-center h-7 w-7 rounded-br-md rounded-tr-md border hover:bg-slate-200 sm:h-10 sm:w-10">
+                                    <button
+                                        className="flex-center h-7 w-7 rounded-br-md rounded-tr-md border hover:bg-slate-200 sm:h-10 sm:w-10"
+                                        onClick={() =>
+                                            handleQuantityChange(
+                                                "inc",
+                                                cartItem.quantity,
+                                                cartItem.productId,
+                                            )
+                                        }
+                                    >
                                         <FaPlus />
                                     </button>
                                 </div>
-                                <div className="itemTotal text-xl font-bold text-primary-dark">
+                                <div className="itemTotal text-2xl font-bold text-primary-dark">
                                     Rs {itemTotal}
                                 </div>
                             </div>
                             <ImBin
-                                className="absolute right-4 top-4 cursor-pointer text-2xl text-red-500"
+                                className="absolute right-4 top-4 cursor-pointer text-3xl text-red-500"
                                 title="remove"
                                 onClick={() =>
                                     handleRemoveFromCart(cartItem.productId)
