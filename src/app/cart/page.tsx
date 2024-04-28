@@ -18,6 +18,7 @@ const Cart = () => {
             id: 1,
             userId: 1,
             productId: 1,
+            orderId: null,
             quantity: 6,
             createdAt: new Date("2024-04-17T13:12:20.065Z"),
             updatedAt: new Date("2024-04-17T13:45:10.357Z"),
@@ -42,6 +43,10 @@ const Cart = () => {
 
     const fetchUserCart = () => {
         CartApiClient.getCartItems({ userId: 1 })
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to fetch cart items");
+                return res.json();
+            })
             .then((res) => {
                 setCart(res.data);
                 calculateOrderSummary();
@@ -70,7 +75,7 @@ const Cart = () => {
             const itemTotal = cartItem.product.price * cartItem.quantity;
             return (
                 <>
-                    <div className="flex w-full items-start justify-between gap-2 py-4 sm:py-8 sm:gap-4">
+                    <div className="flex w-full items-start justify-between gap-2 py-4 sm:gap-4 sm:py-8">
                         <div className="aspect-square h-40 w-40 rounded bg-gray-100 p-3 sm:h-64 sm:w-64">
                             <Image
                                 height={600}
@@ -126,7 +131,7 @@ const Cart = () => {
             <Navbar />
             <div className="nav-margin bg-white font-[sans-serif]">
                 <div className="container">
-                    <h2 className="text-3xl font-extrabold text-[#333] pt-4">
+                    <h2 className="pt-4 text-3xl font-extrabold text-[#333]">
                         Shopping Cart
                     </h2>
                     <div className="grid items-start gap-8 lg:grid-cols-3">

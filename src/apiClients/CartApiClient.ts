@@ -1,35 +1,50 @@
-import axios from "axios";
-
 export class CartApiClient {
-    static async getCartItems(data: { userId: number }) {
-        return axios
-            .get(`http://localhost:3000/api/cart/get-items/${data.userId}`)
-            .then((res) => {
-                console.log(res.data.message);
-                return res.data;
-            })
-            .catch((err) => {
-                console.log(err);
-                return err.response.data;
-            });
+    static async getCartItems(data: { userId: number }):Promise<Response> {
+        try {
+            return await fetch(
+                `http://localhost:3000/api/cart/get-items/${data.userId}`,
+            );
+        } catch (err) {
+            console.log(err);
+            throw new Error("Failed to fetch cart items");
+        }
     }
 
     static async addToCart(data: {
         userId: number;
         productId: number;
         quantity: number;
-    }) {
-        return axios
-            .post(`http://localhost:3000/api/cart/add-item`, data, {
+    }):Promise<Response> {
+        try {
+            return await fetch(`http://localhost:3000/api/cart/add-item`, {
+                method: "POST",
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
-            })
-            .then((res) => {
-                return res.data;
-            })
-            .catch((err) => {
-                return err.response.data;
+                body: JSON.stringify(data),
             });
+        } catch (err) {
+            console.log(err);
+            throw new Error("Failed to add item to cart");
+        }
+    }
+    
+    static async removeFromCart(data: {
+        userId: number;
+        productId: number;
+        quantity: number;
+    }):Promise<Response> {
+        try {
+            return await fetch(`http://localhost:3000/api/cart/remove-item`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                body: JSON.stringify(data),
+            });
+        } catch (err) {
+            console.log(err);
+            throw new Error("Failed to remove item from cart");
+        }
     }
 }
