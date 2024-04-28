@@ -1,11 +1,15 @@
 import prisma from "@/client";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-    const formData = await req.formData();
-    const userId = parseInt(formData.get("userId") as string);
-    const productId = parseInt(formData.get("productId") as string);
-    const quantity = parseInt(formData.get("quantity") as string);
+export async function POST(req: Request) {
+    // const formData = await req.formData();
+    // const userId = parseInt(formData.get("userId") as string);
+    // const productId = parseInt(formData.get("productId") as string);
+    // const quantity = parseInt(formData.get("quantity") as string);
+    const reqJson = await req.json();
+    const userId = reqJson.userId;
+    const productId = reqJson.productId;
+    const quantity = reqJson.quantity;
 
     // if user doesn't exist
     const existingUser = await prisma.user.findUnique({

@@ -5,9 +5,11 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Cart as CartType, Product } from "@prisma/client";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaExternalLinkAlt, FaMinus, FaPlus } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
+import { toast } from "react-toastify";
 
 interface CartWithProduct extends CartType {
     product: Product;
@@ -44,6 +46,10 @@ const Cart = () => {
     const fetchUserCart = () => {
         CartApiClient.getCartItems({ userId: 1 })
             .then((res) => {
+                if (res.status == 404) {
+                    setCart([]);
+                    return;
+                }
                 if (!res.ok) throw new Error("Failed to fetch cart items");
                 return res.json();
             })
@@ -70,13 +76,47 @@ const Cart = () => {
         fetchUserCart();
     }, []);
 
+    const handleRemoveFromCart = (productId: number) => {
+        CartApiClient.removeFromCart({ userId: 1, productId })
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to remove item from cart");
+                fetchUserCart();
+            })
+            .then(() => {
+                toast.success("Item removed from cart", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
+            })
+            .catch((err) => {
+                toast.error("Failed to remove item from cart", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
+                console.log(err);
+            });
+    };
+
     const mapCartItems = () => {
+        if (cart.length == 0)
+            return (
+                <p className="flex-center h-56 w-full text-center text-5xl font-semibold text-primary-light">
+                    Cart is empty
+                </p>
+            );
+
         return cart.map((cartItem) => {
             const itemTotal = cartItem.product.price * cartItem.quantity;
             return (
                 <>
-                    <div className="flex w-full items-start justify-between gap-2 py-4 sm:gap-4 sm:py-8">
-                        <div className="aspect-square h-40 w-40 rounded bg-gray-100 p-3 sm:h-64 sm:w-64">
+                    <div className="my-4 flex w-full flex-col items-start justify-between gap-2 bg-gray-50 shadow-md sm:my-8 sm:flex-row sm:gap-4">
+                        <div className="aspect-square h-50 w-full mx-auto rounded bg-gray-200 p-2 sm:h-64 sm:w-64 sm:p-4">
                             <Image
                                 height={600}
                                 width={600}
@@ -86,9 +126,13 @@ const Cart = () => {
                             />
                         </div>
                         <div className="relative flex h-40 w-full flex-col p-2 sm:h-64 sm:p-4">
-                            <p className="text-2xl font-bold text-primary-dark">
+                            <Link
+                                href={`/product/${cartItem.productId}`}
+                                className="flex gap-2 text-2xl font-bold text-primary-dark hover:underline hover:brightness-75"
+                            >
                                 {cartItem.product.name}
-                            </p>
+                                <FaExternalLinkAlt />
+                            </Link>
                             <h4 className="mt-2 font-bold text-primary-light">
                                 Rs {cartItem.product.price}
                             </h4>
@@ -118,6 +162,9 @@ const Cart = () => {
                             <ImBin
                                 className="absolute right-4 top-4 cursor-pointer text-2xl text-red-500"
                                 title="remove"
+                                onClick={() =>
+                                    handleRemoveFromCart(cartItem.productId)
+                                }
                             />
                         </div>
                     </div>

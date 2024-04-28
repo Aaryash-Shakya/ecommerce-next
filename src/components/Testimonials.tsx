@@ -10,7 +10,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { TestimonialType, testimonials } from "@/data/testimonials.data";
+import { testimonials } from "@/data/testimonials.data";
 
 export default function Testimonials() {
     return (

@@ -19,7 +19,7 @@ export class CartApiClient {
             return await fetch(`http://localhost:3000/api/cart/add-item`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             });
@@ -32,13 +32,12 @@ export class CartApiClient {
     static async removeFromCart(data: {
         userId: number;
         productId: number;
-        quantity: number;
     }):Promise<Response> {
         try {
             return await fetch(`http://localhost:3000/api/cart/remove-item`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": `application/json`,
                 },
                 body: JSON.stringify(data),
             });
