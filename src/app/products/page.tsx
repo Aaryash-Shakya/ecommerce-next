@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -8,6 +8,7 @@ import Image from "next/image";
 import { GiSettingsKnobs } from "react-icons/gi";
 import ProductList from "./ProductList";
 import Loading from "../loading";
+import { useRouter } from "next/navigation";
 
 function Products({
     searchParams,
@@ -15,9 +16,50 @@ function Products({
     // very hacky way
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
-    const selectedCategories = (searchParams.category || "all" as string);
+    const router = useRouter();
+
+    const selectedCategories = (searchParams.category as string) || "all";
     const selectedSortBy = (searchParams.sort || "default") as string;
     const selectedShow = (searchParams.show || "8") as string;
+
+    const filters = {
+        bedroomFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("bedroom"),
+        kitchenFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("kitchen"),
+        livingRoomFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("living-room"),
+        officeFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("office"),
+        studyRoomFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("study-room"),
+        sort: selectedSortBy,
+        show: selectedShow,
+    };
+
+    const generateNewSearchParams = (): string => {
+        const searchParams = new URLSearchParams({
+            sort: filters.sort,
+            show: filters.show,
+            category: [
+                filters.bedroomFlag ? "bedroom" : "",
+                filters.kitchenFlag ? "kitchen" : "",
+                filters.livingRoomFlag ? "living-room" : "",
+                filters.officeFlag ? "office" : "",
+                filters.studyRoomFlag ? "study-room" : "",
+            ]
+                .filter((item) => item !== "")
+                .join(","),
+        }).toString();
+        console.log(searchParams);
+        return searchParams;
+    };
+
     return (
         <>
             <Navbar />
@@ -58,27 +100,36 @@ function Products({
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.bedroomFlag}
                                         className="checkbox"
-                                        onClick={()=>{
-
-                                        }}
+                                        onClick={() =>
+                                            (filters.bedroomFlag =
+                                                !filters.bedroomFlag)
+                                        }
                                     />
                                     <span className="label-text">Bedroom</span>
                                 </label>
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.kitchenFlag}
                                         className="checkbox"
+                                        onClick={() =>
+                                            (filters.kitchenFlag =
+                                                !filters.kitchenFlag)
+                                        }
                                     />
                                     <span className="label-text">Kitchen</span>
                                 </label>
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.livingRoomFlag}
                                         className="checkbox"
+                                        onClick={() =>
+                                            (filters.livingRoomFlag =
+                                                !filters.livingRoomFlag)
+                                        }
                                     />
                                     <span className="label-text">
                                         Living Room
@@ -87,21 +138,42 @@ function Products({
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.officeFlag}
                                         className="checkbox"
+                                        onClick={() =>
+                                            (filters.officeFlag =
+                                                !filters.officeFlag)
+                                        }
                                     />
                                     <span className="label-text">Office</span>
                                 </label>
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.studyRoomFlag}
                                         className="checkbox"
+                                        onClick={() =>
+                                            (filters.studyRoomFlag =
+                                                !filters.studyRoomFlag)
+                                        }
                                     />
                                     <span className="label-text">
                                         Study Room
                                     </span>
                                 </label>
+                                <button
+                                    onClick={() => {
+                                        router.push(
+                                            `?${generateNewSearchParams()}`,
+                                            {
+                                                scroll: false,
+                                            },
+                                        );
+                                    }}
+                                    className="btn-primary-light btn mt-2 w-full"
+                                >
+                                    Apply
+                                </button>
                             </ul>
                         </details>
                         | Showing 1-{selectedShow} of {12} results
@@ -112,12 +184,27 @@ function Products({
                             type="text"
                             placeholder={selectedShow}
                             className="input input-bordered w-14 text-center"
+                            value={filters.show}
+                            onChange={(e) => {
+                                filters.show = e.target.value;
+                                router.push(`?${generateNewSearchParams()}`, {
+                                    scroll: false,
+                                });
+                            }}
                         />
                         <span className="flex-center w-20">| Sort By</span>
-                        <select className="select select-bordered w-full max-w-40">
-                            <option>Default</option>
-                            <option>Price: High to Low</option>
-                            <option>Price: Low to High</option>
+                        <select
+                            className="select select-bordered w-full max-w-48"
+                            onChange={(e) => {
+                                filters.sort = e.target.value;
+                                router.push(`?${generateNewSearchParams()}`, {
+                                    scroll: false,
+                                });
+                            }}
+                        >
+                            <option value={"default"}>Default</option>
+                            <option value={"pdesc"}>Price: High to Low</option>
+                            <option value={"pasc"}>Price: Low to High</option>
                         </select>
                     </div>
                 </div>
@@ -127,7 +214,7 @@ function Products({
                 <div className="px-4 md:container md:px-0">
                     <div className="my-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10">
                         <Suspense fallback={<Loading />}>
-                            <ProductList />
+                            <ProductList filters={filters} />
                         </Suspense>
                     </div>
                 </div>
