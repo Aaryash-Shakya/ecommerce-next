@@ -281,7 +281,7 @@ const Cart = () => {
                             </ul>
                             <Link
                                 type="button"
-                                className="btn-primary-light btn border-none px-8 shadow-lg"
+                                className="btn-primary-light btn border-none px-8 shadow-lg"  
                                 href={`/checkout?total=${total}`}
                             >
                                 Check out

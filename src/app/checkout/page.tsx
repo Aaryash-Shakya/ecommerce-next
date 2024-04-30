@@ -1,9 +1,11 @@
 "use client";
 
+import { OrderApiClient } from "@/apiClients/OrderApiClient";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Checkout() {
     const searchParams = useSearchParams();
@@ -13,6 +15,27 @@ export default function Checkout() {
     const [paymentMethod, setPaymentMethod] = useState<"eSewa" | "mastercard">(
         "mastercard",
     );
+
+    const handlePlaceOrder = () => {
+        OrderApiClient.placeOrder({
+            userId: 1,
+            amount: subtotal + shipping,
+        })
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to place order");
+                return res.json();
+            })
+            .then((data) => {
+                toast.success(data.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error("Failed to place order");
+            });
+    };
 
     return (
         <>
@@ -308,15 +331,15 @@ export default function Checkout() {
                                 Order Summary
                             </h3>
                             <div className="order-summary w-2/3 flex-col">
-                                <div className="flex p-2 w-80 justify-between font-semibold">
+                                <div className="flex w-80 justify-between p-2 font-semibold">
                                     <p className="text-lg ">Subtotal</p>
                                     <p className="">{subtotal}</p>
                                 </div>
-                                <div className="flex p-2 w-80 justify-between font-semibold">
+                                <div className="flex w-80 justify-between p-2 font-semibold">
                                     <p className="text-lg ">Shipping</p>
                                     <p className="">{shipping}</p>
                                 </div>
-                                <div className="flex p-2 w-80 justify-between border-t border-black">
+                                <div className="flex w-80 justify-between border-t border-black p-2">
                                     <p className="text-lg font-bold">
                                         Grand Total
                                     </p>
@@ -324,7 +347,12 @@ export default function Checkout() {
                                 </div>
                             </div>
                         </div>
-                        <div className="btn-primary-dark btn">Pay</div>
+                        <div
+                            className="btn-primary-dark btn"
+                            onClick={handlePlaceOrder}
+                        >
+                            Pay
+                        </div>
                     </div>
                 </div>
             </div>
