@@ -66,6 +66,7 @@ const Cart = () => {
         );
         setSubtotal(sumOfItemTotal);
         setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
+        localStorage.setItem("cartTotal", JSON.stringify(total));
     };
 
     useEffect(() => {
@@ -278,12 +279,13 @@ const Cart = () => {
                                     <span className="ml-auto">Rs {total}</span>
                                 </li>
                             </ul>
-                            <button
+                            <Link
                                 type="button"
                                 className="btn-primary-light btn border-none px-8 shadow-lg"
+                                href={`/checkout?total=${total}`}
                             >
                                 Check out
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
