@@ -187,7 +187,7 @@ function Products({
                                 });
                             }}
                         />
-                        <span className="flex-center w-20">| Sort By</span>
+                        <span className="flex-center w-24 whitespace-nowrap">| Sort By</span>
                         <select
                             className="select select-bordered w-full max-w-44 px-3"
                             onChange={(e) => {

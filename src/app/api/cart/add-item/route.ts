@@ -29,12 +29,14 @@ export async function POST(req: Request) {
         where: {
             userId: userId,
             productId: productId,
+            orderId: null,
         },
     });
     if (existingItem) {
         await prisma.cart.update({
             where: {
                 id: existingItem.id,
+                orderId: null,
             },
             data: {
                 quantity: quantity,

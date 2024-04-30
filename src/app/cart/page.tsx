@@ -38,7 +38,6 @@ const Cart = () => {
         },
     ]);
     const [subtotal, setSubtotal] = useState(0);
-    const [shipping, setShipping] = useState(0);
     const [total, setTotal] = useState(0);
 
     const fetchUserCart = () => {
@@ -66,8 +65,7 @@ const Cart = () => {
             0,
         );
         setSubtotal(sumOfItemTotal);
-        setShipping(1000);
-        setTotal(sumOfItemTotal + 1000);
+        setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
     };
 
     useEffect(() => {
@@ -75,7 +73,8 @@ const Cart = () => {
     }, []);
 
     const handleRemoveFromCart = (productId: number) => {
-        if(!confirm("Are you sure you want to remove this item from cart?")) return;
+        if (!confirm("Are you sure you want to remove this item from cart?"))
+            return;
         CartApiClient.removeFromCart({ userId: 1, productId })
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to remove item from cart");
@@ -170,7 +169,7 @@ const Cart = () => {
                                 {cartItem.product.name}
                                 <FaExternalLinkAlt />
                             </Link>
-                            <h4 className="mt-2 font-bold text-primary-light text-lg">
+                            <h4 className="mt-2 text-lg font-bold text-primary-light">
                                 Rs {cartItem.product.price}
                             </h4>
                             <div className="bottom mb-0 mt-auto flex flex-col items-end justify-between sm:flex-row sm:items-center">
@@ -228,7 +227,20 @@ const Cart = () => {
 
     return (
         <>
-            <div className="nav-margin bg-white font-[sans-serif]">
+            {/* breadcrumbs */}
+            <div className="nav-margin w-full bg-primary-light/40">
+                <div className="breadcrumbs py-4 text-sm md:container">
+                    <ul>
+                        <li>
+                            <Link href="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link href="/cart">Cart</Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div className="bg-white">
                 <div className="container">
                     <h2 className="pt-4 text-3xl font-extrabold text-[#333]">
                         Shopping Cart
@@ -250,9 +262,15 @@ const Cart = () => {
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3">
-                                    Shipping{" "}
+                                    Discount %{" "}
                                     <span className="ml-auto font-bold">
-                                        Rs {shipping}
+                                        10%
+                                    </span>
+                                </li>
+                                <li className="text-md flex flex-wrap gap-4 py-3">
+                                    Discount Amount{" "}
+                                    <span className="ml-auto font-bold">
+                                        {0.1*subtotal}
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3 font-bold">
