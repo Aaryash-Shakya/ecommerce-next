@@ -13,30 +13,7 @@ interface CartWithProduct extends CartType {
     product: Product;
 }
 const Cart = () => {
-    const [cart, setCart] = useState<CartWithProduct[]>([
-        {
-            id: 1,
-            userId: 1,
-            productId: 1,
-            orderId: null,
-            quantity: 6,
-            createdAt: new Date("2024-04-17T13:12:20.065Z"),
-            updatedAt: new Date("2024-04-17T13:45:10.357Z"),
-            product: {
-                id: 1,
-                categoryId: 2,
-                name: "Uppland",
-                price: 84900,
-                description:
-                    "You know the feeling when you sit, lie down or hang out in a sofa, rather than on it. That’s how embracing the deep and generous UPPLAND sofa is – your new favorite place for cozy evenings and lazy days!",
-                image: "sofa/sofa-1",
-                imageCount: 5,
-                location: "living-room:office",
-                createdAt: new Date("2024-04-08T18:36:42.000Z"),
-                updatedAt: new Date("2024-04-08T19:49:16.893Z"),
-            },
-        },
-    ]);
+    const [cart, setCart] = useState<CartWithProduct[]>([]);
     const [subtotal, setSubtotal] = useState(0);
     const [total, setTotal] = useState(0);
 
@@ -52,7 +29,6 @@ const Cart = () => {
             })
             .then((res) => {
                 setCart(res.data);
-                calculateOrderSummary();
             })
             .catch((err) => {
                 console.log(err);
@@ -66,12 +42,16 @@ const Cart = () => {
         );
         setSubtotal(sumOfItemTotal);
         setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
-        localStorage.setItem("cartTotal", JSON.stringify(total));
+        // localStorage.setItem("cartTotal", JSON.stringify(total));
     };
 
     useEffect(() => {
         fetchUserCart();
     }, []);
+
+    useEffect(()=>{
+        calculateOrderSummary();
+    }, [cart])
 
     const handleRemoveFromCart = (productId: number) => {
         if (!confirm("Are you sure you want to remove this item from cart?"))
@@ -79,7 +59,6 @@ const Cart = () => {
         CartApiClient.removeFromCart({ userId: 1, productId })
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to remove item from cart");
-                fetchUserCart();
             })
             .then(() => {
                 toast.success("Item removed from cart", {
@@ -88,6 +67,7 @@ const Cart = () => {
                     closeOnClick: true,
                     pauseOnHover: false,
                 });
+                fetchUserCart();
             })
             .catch((err) => {
                 toast.error("Failed to remove item from cart", {
@@ -271,7 +251,7 @@ const Cart = () => {
                                 <li className="text-md flex flex-wrap gap-4 py-3">
                                     Discount Amount{" "}
                                     <span className="ml-auto font-bold">
-                                        {0.1*subtotal}
+                                        {0.1 * subtotal}
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3 font-bold">
@@ -281,7 +261,7 @@ const Cart = () => {
                             </ul>
                             <Link
                                 type="button"
-                                className="btn-primary-light btn border-none px-8 shadow-lg"  
+                                className="btn-primary-light btn border-none px-8 shadow-lg"
                                 href={`/checkout?total=${total}`}
                             >
                                 Check out

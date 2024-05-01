@@ -196,6 +196,7 @@ function Products({
                                     scroll: false,
                                 });
                             }}
+                            defaultValue={selectedSortBy}
                         >
                             <option value={"default"}>Default</option>
                             <option value={"pdesc"}>Price: High to Low</option>
