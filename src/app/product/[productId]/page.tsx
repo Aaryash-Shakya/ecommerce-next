@@ -2,8 +2,8 @@
 
 import { CartApiClient } from "@/apiClients/CartApiClient";
 import { ProductApiClient } from "@/apiClients/ProductApiClient";
-import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { ApiResponse } from "@/types/api";
 import { Product as ProductType } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,11 +41,20 @@ function Product({ params }: ProductProps) {
             productId: parseInt(productId),
         })
             .then((res) => {
-                setProduct(res.data as ProductType);
-                console.log(res.data);
+                if (!res.ok) throw new Error("Failed to fetch product");
+                return res.json();
             })
-            .catch(() => {
-                console.error("Something went wrong");
+            .then((res: ApiResponse) => {
+                setProduct(res.data as ProductType);
+            })
+            .catch((err: Error) => {
+                toast.error(err.message || "Failed to add to cart.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    theme: "light",
+                });
             });
     };
 
@@ -56,10 +65,13 @@ function Product({ params }: ProductProps) {
             quantity: quantity,
         })
             .then((res) => {
+                if (!res.ok) throw new Error("Failed to add product to cart");
+                return res.json();
+            })
+            .then((res) => {
                 toast.success(res.message, {
                     position: "top-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
                     closeOnClick: true,
                     theme: "light",
                 });
@@ -68,7 +80,6 @@ function Product({ params }: ProductProps) {
                 toast.error(err.message || "Failed to add to cart.", {
                     position: "top-right",
                     autoClose: 5000,
-                    hideProgressBar: false,
                     closeOnClick: true,
                     theme: "light",
                 });
@@ -347,7 +358,6 @@ function Product({ params }: ProductProps) {
                     <BottomDetails product={product} />
                 </div>
             </div>
-            <Footer />
         </>
     );
 }

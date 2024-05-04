@@ -12,18 +12,23 @@ export async function GET(req: NextRequest, { params }: ParamsType) {
     const cartItems = await prisma.cart.findMany({
         where: {
             userId: userId,
+            orderId: null,
         },
         include: {
             product: true,
-        }
+        },
     });
 
     // if cart is empty
     if (cartItems.length === 0) {
-        return NextResponse.json({
-            data: cartItems,
-            message: "Cart is empty",
-        });
+        return NextResponse.json(
+            {
+                message: "Cart is empty",
+            },
+            {
+                status: 404,
+            },
+        );
     }
 
     return NextResponse.json({

@@ -1,50 +1,34 @@
 "use client";
 
 import { CartApiClient } from "@/apiClients/CartApiClient";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 import { Cart as CartType, Product } from "@prisma/client";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaExternalLinkAlt, FaMinus, FaPlus } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
+import { toast } from "react-toastify";
 
 interface CartWithProduct extends CartType {
     product: Product;
 }
 const Cart = () => {
-    const [cart, setCart] = useState<CartWithProduct[]>([
-        {
-            id: 1,
-            userId: 1,
-            productId: 1,
-            quantity: 6,
-            createdAt: new Date("2024-04-17T13:12:20.065Z"),
-            updatedAt: new Date("2024-04-17T13:45:10.357Z"),
-            product: {
-                id: 1,
-                categoryId: 2,
-                name: "Uppland",
-                price: 84900,
-                description:
-                    "You know the feeling when you sit, lie down or hang out in a sofa, rather than on it. That’s how embracing the deep and generous UPPLAND sofa is – your new favorite place for cozy evenings and lazy days!",
-                image: "sofa/sofa-1",
-                imageCount: 5,
-                location: "living-room:office",
-                createdAt: new Date("2024-04-08T18:36:42.000Z"),
-                updatedAt: new Date("2024-04-08T19:49:16.893Z"),
-            },
-        },
-    ]);
+    const [cart, setCart] = useState<CartWithProduct[]>([]);
     const [subtotal, setSubtotal] = useState(0);
-    const [shipping, setShipping] = useState(0);
     const [total, setTotal] = useState(0);
 
     const fetchUserCart = () => {
         CartApiClient.getCartItems({ userId: 1 })
             .then((res) => {
+                if (res.status == 404) {
+                    setCart([]);
+                    return;
+                }
+                if (!res.ok) throw new Error("Failed to fetch cart items");
+                return res.json();
+            })
+            .then((res) => {
                 setCart(res.data);
-                calculateOrderSummary();
             })
             .catch((err) => {
                 console.log(err);
@@ -57,21 +41,99 @@ const Cart = () => {
             0,
         );
         setSubtotal(sumOfItemTotal);
-        setShipping(1000);
-        setTotal(sumOfItemTotal + 1000);
+        setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
+        // localStorage.setItem("cartTotal", JSON.stringify(total));
     };
 
     useEffect(() => {
         fetchUserCart();
     }, []);
 
+    useEffect(()=>{
+        calculateOrderSummary();
+    }, [cart])
+
+    const handleRemoveFromCart = (productId: number) => {
+        if (!confirm("Are you sure you want to remove this item from cart?"))
+            return;
+        CartApiClient.removeFromCart({ userId: 1, productId })
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to remove item from cart");
+            })
+            .then(() => {
+                toast.success("Item removed from cart", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
+                fetchUserCart();
+            })
+            .catch((err) => {
+                toast.error("Failed to remove item from cart", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
+                console.log(err);
+            });
+    };
+
+    // implement increment and decrement quantity
+    const handleQuantityChange = (
+        type: "inc" | "dec",
+        quantity: number,
+        productId: number,
+    ) => {
+        if (type == "inc") {
+            quantity = quantity + 1;
+        } else if (type == "dec" && quantity > 1) {
+            quantity = quantity - 1;
+        } else {
+            return;
+        }
+        CartApiClient.addToCart({
+            userId: 1,
+            productId,
+            quantity: quantity,
+        })
+            .then((res) => {
+                if (!res.ok)
+                    throw new Error(`Failed to ${type}rement quantity`);
+                fetchUserCart();
+                toast.success(`Quantity ${type}remented`, {
+                    position: "top-right",
+                    autoClose: 1500,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(`Failed to ${type}rement quantity`, {
+                    position: "top-right",
+                    autoClose: 1500,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                });
+            });
+    };
+
     const mapCartItems = () => {
+        if (cart.length == 0)
+            return (
+                <p className="flex-center h-56 w-full text-center text-5xl font-semibold text-primary-light">
+                    Cart is empty
+                </p>
+            );
+
         return cart.map((cartItem) => {
             const itemTotal = cartItem.product.price * cartItem.quantity;
             return (
                 <>
-                    <div className="flex w-full items-start justify-between gap-2 py-4 sm:py-8 sm:gap-4">
-                        <div className="aspect-square h-40 w-40 rounded bg-gray-100 p-3 sm:h-64 sm:w-64">
+                    <div className="my-4 flex w-full flex-col items-start justify-between gap-2 bg-gray-50 shadow-md sm:my-8 sm:flex-row sm:gap-4">
+                        <div className="h-50 mx-auto aspect-square w-full rounded bg-gray-200 p-2 sm:h-64 sm:w-64 sm:p-4">
                             <Image
                                 height={600}
                                 width={600}
@@ -81,10 +143,14 @@ const Cart = () => {
                             />
                         </div>
                         <div className="relative flex h-40 w-full flex-col p-2 sm:h-64 sm:p-4">
-                            <p className="text-2xl font-bold text-primary-dark">
+                            <Link
+                                href={`/product/${cartItem.productId}`}
+                                className="flex gap-2 text-2xl font-bold text-primary-dark hover:underline hover:brightness-75"
+                            >
                                 {cartItem.product.name}
-                            </p>
-                            <h4 className="mt-2 font-bold text-primary-light">
+                                <FaExternalLinkAlt />
+                            </Link>
+                            <h4 className="mt-2 text-lg font-bold text-primary-light">
                                 Rs {cartItem.product.price}
                             </h4>
                             <div className="bottom mb-0 mt-auto flex flex-col items-end justify-between sm:flex-row sm:items-center">
@@ -94,6 +160,13 @@ const Cart = () => {
                                             cartItem.quantity == 1 &&
                                             "cursor-not-allowed"
                                         }`}
+                                        onClick={() =>
+                                            handleQuantityChange(
+                                                "dec",
+                                                cartItem.quantity,
+                                                cartItem.productId,
+                                            )
+                                        }
                                     >
                                         <FaMinus />
                                     </button>
@@ -102,17 +175,29 @@ const Cart = () => {
                                         value={cartItem.quantity}
                                         className="h-7 w-7 border text-center text-xl sm:h-10 sm:w-10"
                                     />
-                                    <button className="flex-center h-7 w-7 rounded-br-md rounded-tr-md border hover:bg-slate-200 sm:h-10 sm:w-10">
+                                    <button
+                                        className="flex-center h-7 w-7 rounded-br-md rounded-tr-md border hover:bg-slate-200 sm:h-10 sm:w-10"
+                                        onClick={() =>
+                                            handleQuantityChange(
+                                                "inc",
+                                                cartItem.quantity,
+                                                cartItem.productId,
+                                            )
+                                        }
+                                    >
                                         <FaPlus />
                                     </button>
                                 </div>
-                                <div className="itemTotal text-xl font-bold text-primary-dark">
+                                <div className="itemTotal text-2xl font-bold text-primary-dark">
                                     Rs {itemTotal}
                                 </div>
                             </div>
                             <ImBin
-                                className="absolute right-4 top-4 cursor-pointer text-2xl text-red-500"
+                                className="absolute right-4 top-4 cursor-pointer text-3xl text-red-500"
                                 title="remove"
+                                onClick={() =>
+                                    handleRemoveFromCart(cartItem.productId)
+                                }
                             />
                         </div>
                     </div>
@@ -123,10 +208,22 @@ const Cart = () => {
 
     return (
         <>
-            <Navbar />
-            <div className="nav-margin bg-white font-[sans-serif]">
+            {/* breadcrumbs */}
+            <div className="nav-margin w-full bg-primary-light/40">
+                <div className="breadcrumbs py-4 text-sm md:container">
+                    <ul>
+                        <li>
+                            <Link href="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link href="/cart">Cart</Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div className="bg-white">
                 <div className="container">
-                    <h2 className="text-3xl font-extrabold text-[#333] pt-4">
+                    <h2 className="pt-4 text-3xl font-extrabold text-[#333]">
                         Shopping Cart
                     </h2>
                     <div className="grid items-start gap-8 lg:grid-cols-3">
@@ -146,9 +243,15 @@ const Cart = () => {
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3">
-                                    Shipping{" "}
+                                    Discount %{" "}
                                     <span className="ml-auto font-bold">
-                                        Rs {shipping}
+                                        10%
+                                    </span>
+                                </li>
+                                <li className="text-md flex flex-wrap gap-4 py-3">
+                                    Discount Amount{" "}
+                                    <span className="ml-auto font-bold">
+                                        {0.1 * subtotal}
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3 font-bold">
@@ -156,17 +259,17 @@ const Cart = () => {
                                     <span className="ml-auto">Rs {total}</span>
                                 </li>
                             </ul>
-                            <button
+                            <Link
                                 type="button"
                                 className="btn-primary-light btn border-none px-8 shadow-lg"
+                                href={`/checkout?total=${total}`}
                             >
                                 Check out
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 };

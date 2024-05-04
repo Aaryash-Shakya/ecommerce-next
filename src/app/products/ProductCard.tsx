@@ -24,40 +24,25 @@ function ProductCard({ product }: { product: Product }) {
                         {/* <div className="badge badge-outline">NEW</div> */}
                     </h2>
                     <div className="badges space-x-2 space-y-2">
-                        {product.location.includes("office") && (
-                            <span className="badge badge-neutral badge-outline">
-                                office
-                            </span>
-                        )}
-                        {product.location.includes("living-room") && (
-                            <span className="badge badge-neutral badge-outline">
-                                living room
-                            </span>
-                        )}
-                        {product.location.includes("study-room") && (
-                            <span className="badge badge-neutral badge-outline">
-                                study room
-                            </span>
-                        )}
-                        {product.location.includes("kitchen") && (
-                            <span className="badge badge-neutral badge-outline">
-                                kitchen
-                            </span>
-                        )}
-                        {product.location.includes("bedroom") && (
-                            <span className="badge badge-neutral badge-outline">
-                                bedroom
-                            </span>
-                        )}
+                        {product.location.split(":").map((location, i) => {
+                            return (
+                                <span
+                                    key={i}
+                                    className="badge badge-neutral badge-outline"
+                                >
+                                    {location}
+                                </span>
+                            );
+                        })}
                     </div>
                     <p className="align-baseline text-lg font-semibold text-primary-light">
                         Rs {product.price}
                     </p>
-                    {/* <div className="card-actions justify-end">
+                    <Link href={`/product/${product.id}`} className="card-actions justify-end block sm:hidden ms-auto me-0">
                         <button className="btn btn-primary-dark">Buy Now</button>
-                    </div> */}
+                    </Link>
                 </div>
-                <div className="transition-all absolute hidden aspect-square w-full flex-col items-center justify-center gap-4 bg-transparent duration-700 ease-in-out group-hover:flex group-hover:bg-black/70 rounded-t">
+                <div className="absolute hidden aspect-square w-full flex-col items-center justify-center gap-4 rounded-t bg-transparent transition-all duration-700 ease-in-out group-hover:flex group-hover:bg-black/70">
                     <Link
                         href={`/product/${product.id}`}
                         className="btn-primary-dark btn border-0"
@@ -66,10 +51,10 @@ function ProductCard({ product }: { product: Product }) {
                     </Link>
                     <div className="options flex-center gap-2 text-white">
                         <button className="btn btn-ghost">
-                            <FaRegHeart /> Like
+                            <FaRegHeart className="text-red-400" /> Like
                         </button>
                         <button className="btn btn-ghost">
-                            <FaCodeCompare />
+                            <FaCodeCompare className="text-blue-400" />
                             Compare
                         </button>
                     </div>

@@ -86,9 +86,9 @@ export default function Navbar() {
                             <Link href="/cart" title="cart">
                                 <FaShoppingCart className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
                             </Link>
-                            <a title="profile">
+                            <Link href="/dashboard" title="profile">
                                 <FaUser className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -100,6 +100,29 @@ paths:
                   required: true
                   schema:
                     type: integer
+    /cart/remove-item:
+        post:
+            tags:
+                - "Cart"
+            summary: "Remove item from user's cart"
+            description: "Remove an item from user's cart"
+            consumes:
+                - "application/json"
+            produces:
+                - "application/json"
+            parameters:
+                - in: body
+                  name: "userId"
+                  description: "ID of the user"
+                  required: true
+                  schema:
+                    type: integer
+                - in: body
+                  name: "productId"
+                  description: "ID of the product"
+                  required: true
+                  schema:
+                    type: integer
 definitions:
     ApiResponse:
         type: "object"

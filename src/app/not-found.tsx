@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -8,7 +7,6 @@ export default function NotFound() {
     return (
         <>
             <div className="bg-primary-light">
-                <Navbar />
                 <div className="flex min-h-screen w-full flex-row items-center justify-center gap-10 pt-20 md:container md:gap-20">
                     <div className="img-container image-full absolute left-1/2 top-1/2 grid w-full -translate-x-1/2 -translate-y-1/2 place-content-center md:relative md:left-0 md:top-0 md:translate-x-0 md:translate-y-0">
                         <Image

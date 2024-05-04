@@ -1,69 +1,65 @@
 "use client";
 
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import { GiSettingsKnobs } from "react-icons/gi";
-import { Product } from "@prisma/client";
-import { ProductApiClient } from "@/apiClients/ProductApiClient";
+import ProductList from "./ProductList";
+import Loading from "../loading";
+import { useRouter } from "next/navigation";
 
-function Products() {
-    const [livingRoomFlag, setLivingRoomFlag] = useState(true);
-    const [studyRoomFlag, setStudyRoomFlag] = useState(true);
-    const [bedroomFlag, setBedroomFlag] = useState(true);
-    const [kitchenFlag, setKitchenFlag] = useState(true);
-    const [officeFlag, setOfficeFlag] = useState(true);
-    const [products, setProducts] = useState<Product[]>([
-        {
-            id: 0,
-            categoryId: 0,
-            name: "",
-            price: 0,
-            description: "",
-            location: "",
-            image: "sofa/sofa-1",
-            imageCount: 0,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-    ]);
+function Products({
+    searchParams,
+}: {
+    // very hacky way
+    searchParams: { [key: string]: string | string[] | undefined };
+}) {
+    const router = useRouter();
 
-    const fetchData = () => {
-        ProductApiClient.getAllProducts()
-            .then((res) => {
-                setProducts(res.data);
-            })
-            .catch((err) => console.error(err));
+    const selectedCategories = (searchParams.category as string) || "all";
+    const selectedSortBy = (searchParams.sort || "default") as string;
+    const selectedShow = (searchParams.show || "8") as string;
+
+    const filters = {
+        bedroomFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("bedroom"),
+        kitchenFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("kitchen"),
+        livingRoomFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("living-room"),
+        officeFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("office"),
+        studyRoomFlag:
+            selectedCategories === "all" ||
+            selectedCategories.includes("study-room"),
+        sort: selectedSortBy,
+        show: selectedShow,
     };
 
-    const mapProducts = () => {
-        return products.map((item) => {
-            if (item.location.indexOf("living-room") != -1 && livingRoomFlag) {
-                return <ProductCard key={item.id} product={item} />;
-            } else if (
-                item.location.indexOf("study-room") != -1 &&
-                studyRoomFlag
-            ) {
-                return <ProductCard key={item.id} product={item} />;
-            } else if (item.location.indexOf("kitchen") != -1 && kitchenFlag) {
-                return <ProductCard key={item.id} product={item} />;
-            } else if (item.location.indexOf("office") != -1 && officeFlag) {
-                return <ProductCard key={item.id} product={item} />;
-            } else if (item.location.indexOf("bedroom") != -1 && bedroomFlag) {
-                return <ProductCard key={item.id} product={item} />;
-            }
-            return <ProductCard key={item.id} product={item} />;
-        });
+    const generateNewSearchParams = (): string => {
+        const searchParams = new URLSearchParams({
+            sort: filters.sort,
+            show: filters.show,
+            category: [
+                filters.bedroomFlag ? "bedroom" : "",
+                filters.kitchenFlag ? "kitchen" : "",
+                filters.livingRoomFlag ? "living-room" : "",
+                filters.officeFlag ? "office" : "",
+                filters.studyRoomFlag ? "study-room" : "",
+            ]
+                .filter((item) => item !== "")
+                .join(","),
+        }).toString();
+        console.log(searchParams);
+        return searchParams;
     };
-    useEffect(() => {
-        fetchData();
-    },[])
+
     return (
         <>
-            <Navbar />
             <div className="nav-margin h-44 w-full overflow-hidden text-sm text-primary-dark md:h-64">
                 <Image
                     src="/banners/banner-1.jpg"
@@ -99,22 +95,23 @@ function Products() {
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.bedroomFlag}
                                         className="checkbox"
-                                        onClick={() => {
-                                            setBedroomFlag(!bedroomFlag);
-                                            window.location.reload();
-                                        }}
+                                        onClick={() =>
+                                            (filters.bedroomFlag =
+                                                !filters.bedroomFlag)
+                                        }
                                     />
                                     <span className="label-text">Bedroom</span>
                                 </label>
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.kitchenFlag}
                                         className="checkbox"
                                         onClick={() =>
-                                            setKitchenFlag(!kitchenFlag)
+                                            (filters.kitchenFlag =
+                                                !filters.kitchenFlag)
                                         }
                                     />
                                     <span className="label-text">Kitchen</span>
@@ -122,10 +119,11 @@ function Products() {
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.livingRoomFlag}
                                         className="checkbox"
                                         onClick={() =>
-                                            setLivingRoomFlag(!livingRoomFlag)
+                                            (filters.livingRoomFlag =
+                                                !filters.livingRoomFlag)
                                         }
                                     />
                                     <span className="label-text">
@@ -135,10 +133,11 @@ function Products() {
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.officeFlag}
                                         className="checkbox"
                                         onClick={() =>
-                                            setOfficeFlag(!officeFlag)
+                                            (filters.officeFlag =
+                                                !filters.officeFlag)
                                         }
                                     />
                                     <span className="label-text">Office</span>
@@ -146,32 +145,62 @@ function Products() {
                                 <label className="flex-center label cursor-pointer gap-4">
                                     <input
                                         type="checkbox"
-                                        defaultChecked
+                                        defaultChecked={filters.studyRoomFlag}
                                         className="checkbox"
                                         onClick={() =>
-                                            setStudyRoomFlag(!studyRoomFlag)
+                                            (filters.studyRoomFlag =
+                                                !filters.studyRoomFlag)
                                         }
                                     />
                                     <span className="label-text">
                                         Study Room
                                     </span>
                                 </label>
+                                <button
+                                    onClick={() => {
+                                        router.push(
+                                            `?${generateNewSearchParams()}`,
+                                            {
+                                                scroll: false,
+                                            },
+                                        );
+                                    }}
+                                    className="btn-primary-light btn mt-2 w-full"
+                                >
+                                    Apply
+                                </button>
                             </ul>
                         </details>
-                        | Showing 1-8 of {products.length} results
+                        | Showing 1-{selectedShow} of {12} results
                     </div>
                     <div className="right flex-center gap-2">
                         <span>Show</span>
                         <input
                             type="text"
-                            placeholder="8"
-                            className="input input-bordered aspect-square"
+                            placeholder={selectedShow}
+                            className="input input-bordered w-14 text-center"
+                            value={filters.show}
+                            onChange={(e) => {
+                                filters.show = e.target.value;
+                                router.push(`?${generateNewSearchParams()}`, {
+                                    scroll: false,
+                                });
+                            }}
                         />
-                        <span className="flex-center w-20">| Sort By</span>
-                        <select className="select select-bordered w-full max-w-40">
-                            <option>Default</option>
-                            <option>Price: High to Low</option>
-                            <option>Price: Low to High</option>
+                        <span className="flex-center w-24 whitespace-nowrap">| Sort By</span>
+                        <select
+                            className="select select-bordered w-full max-w-44 px-3"
+                            onChange={(e) => {
+                                filters.sort = e.target.value;
+                                router.push(`?${generateNewSearchParams()}`, {
+                                    scroll: false,
+                                });
+                            }}
+                            defaultValue={selectedSortBy}
+                        >
+                            <option value={"default"}>Default</option>
+                            <option value={"pdesc"}>Price: High to Low</option>
+                            <option value={"pasc"}>Price: Low to High</option>
                         </select>
                     </div>
                 </div>
@@ -180,11 +209,12 @@ function Products() {
             <div className="w-full">
                 <div className="px-4 md:container md:px-0">
                     <div className="my-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10">
-                        {mapProducts()}
+                        <Suspense fallback={<Loading />}>
+                            <ProductList filters={filters} />
+                        </Suspense>
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 }
