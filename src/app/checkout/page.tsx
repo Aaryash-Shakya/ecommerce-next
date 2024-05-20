@@ -1,20 +1,41 @@
 "use client";
 
+import { CartApiClient } from "@/apiClients/CartApiClient";
 import { OrderApiClient } from "@/apiClients/OrderApiClient";
+import { CartWithProduct } from "@/types/cart";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Checkout() {
-    const searchParams = useSearchParams();
-    const searchTotal = searchParams.get("total") || "1000";
-    const [subtotal, setSubtotal] = useState(parseInt(searchTotal));
+    const [subtotal, setSubtotal] = useState(0);
     const [shipping, setShipping] = useState(0);
     const [paymentMethod, setPaymentMethod] = useState<"eSewa" | "mastercard">(
         "mastercard",
     );
+
+    const fetchUserCartTotal = () => {
+        CartApiClient.getCartItems({ userId: 1 })
+            .then((res) => {
+                if (res.status == 404) {
+                    return;
+                }
+                if (!res.ok) throw new Error("Failed to fetch cart items");
+                return res.json();
+            })
+            .then((res) => {
+                const cartItems: CartWithProduct[] = res.data;
+                const cartTotal = cartItems.reduce((acc, item) => {
+                    return acc + item.product.price;
+                }, 0);
+                // 10% discount
+                setSubtotal(0.9 * cartTotal);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     const handlePlaceOrder = () => {
         OrderApiClient.placeOrder({
@@ -36,6 +57,10 @@ export default function Checkout() {
                 toast.error("Failed to place order");
             });
     };
+
+    useEffect(() => {
+        fetchUserCartTotal();
+    }, []);
 
     return (
         <>

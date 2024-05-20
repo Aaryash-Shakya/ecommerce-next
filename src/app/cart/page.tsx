@@ -1,7 +1,7 @@
 "use client";
 
 import { CartApiClient } from "@/apiClients/CartApiClient";
-import { Cart as CartType, Product } from "@prisma/client";
+import { CartWithProduct } from "@/types/cart";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -9,9 +9,6 @@ import { FaExternalLinkAlt, FaMinus, FaPlus } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
 import { toast } from "react-toastify";
 
-interface CartWithProduct extends CartType {
-    product: Product;
-}
 const Cart = () => {
     const [cart, setCart] = useState<CartWithProduct[]>([]);
     const [subtotal, setSubtotal] = useState(0);
@@ -42,16 +39,15 @@ const Cart = () => {
         );
         setSubtotal(sumOfItemTotal);
         setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
-        // localStorage.setItem("cartTotal", JSON.stringify(total));
     };
 
     useEffect(() => {
         fetchUserCart();
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         calculateOrderSummary();
-    }, [cart])
+    }, [cart]);
 
     const handleRemoveFromCart = (productId: number) => {
         if (!confirm("Are you sure you want to remove this item from cart?"))
@@ -262,7 +258,7 @@ const Cart = () => {
                             <Link
                                 type="button"
                                 className="btn-primary-light btn border-none px-8 shadow-lg"
-                                href={`/checkout?total=${total}`}
+                                href={`/checkout`}
                             >
                                 Check out
                             </Link>
