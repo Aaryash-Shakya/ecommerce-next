@@ -1,9 +1,7 @@
-import { SERVER_URL } from "@/config";
-
 export class OrderApiClient {
     static async getOrders(): Promise<Response> {
         try {
-            return await fetch(`${SERVER_URL}/api/order/get-orders`);
+            return await fetch(`http://localhost:3000/api/order/get-orders`);
         } catch (err) {
             console.log(err);
             throw new Error("Failed to fetch orders");
@@ -15,7 +13,7 @@ export class OrderApiClient {
         amount: number;
     }): Promise<Response> {
         try {
-            return await fetch(`${SERVER_URL}/api/order/place-order`, {
+            return await fetch(`http://localhost:3000/api/order/place-order`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

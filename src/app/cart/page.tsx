@@ -32,20 +32,21 @@ const Cart = () => {
             });
     };
 
-    const calculateOrderSummary = () => {
-        const sumOfItemTotal = cart.reduce(
-            (acc, cartItem) => acc + cartItem.product.price * cartItem.quantity,
-            0,
-        );
-        setSubtotal(sumOfItemTotal);
-        setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
-    };
-
     useEffect(() => {
         fetchUserCart();
     }, []);
 
     useEffect(() => {
+        const calculateOrderSummary = () => {
+            const sumOfItemTotal = cart.reduce(
+                (acc, cartItem) =>
+                    acc + cartItem.product.price * cartItem.quantity,
+                0,
+            );
+            setSubtotal(sumOfItemTotal);
+            setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
+        };
+
         calculateOrderSummary();
     }, [cart]);
 

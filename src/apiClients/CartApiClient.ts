@@ -1,11 +1,7 @@
-import { SERVER_URL } from "@/config";
-
 export class CartApiClient {
     static async getCartItems(data: { userId: number }): Promise<Response> {
         try {
-            return await fetch(
-                `${SERVER_URL}/api/cart/get-items/${data.userId}`,
-            );
+            return await fetch(`http://localhost:3000/api/cart/get-items/${data.userId}`);
         } catch (err) {
             console.log(err);
             throw new Error("Failed to fetch cart items");
@@ -18,7 +14,7 @@ export class CartApiClient {
         quantity: number;
     }): Promise<Response> {
         try {
-            return await fetch(`${SERVER_URL}/api/cart/add-item`, {
+            return await fetch(`http://localhost:3000/api/cart/add-item`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,7 +32,7 @@ export class CartApiClient {
         productId: number;
     }): Promise<Response> {
         try {
-            return await fetch(`${SERVER_URL}/api/cart/remove-item`, {
+            return await fetch(`http://localhost:3000/api/cart/remove-item`, {
                 method: "POST",
                 headers: {
                     "Content-Type": `application/json`,
