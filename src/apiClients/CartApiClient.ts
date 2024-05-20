@@ -1,8 +1,10 @@
+import { SERVER_URL } from "@/config";
+
 export class CartApiClient {
-    static async getCartItems(data: { userId: number }):Promise<Response> {
+    static async getCartItems(data: { userId: number }): Promise<Response> {
         try {
             return await fetch(
-                `http://localhost:3000/api/cart/get-items/${data.userId}`,
+                `${SERVER_URL}/api/cart/get-items/${data.userId}`,
             );
         } catch (err) {
             console.log(err);
@@ -14,9 +16,9 @@ export class CartApiClient {
         userId: number;
         productId: number;
         quantity: number;
-    }):Promise<Response> {
+    }): Promise<Response> {
         try {
-            return await fetch(`http://localhost:3000/api/cart/add-item`, {
+            return await fetch(`${SERVER_URL}/api/cart/add-item`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -28,13 +30,13 @@ export class CartApiClient {
             throw new Error("Failed to add item to cart");
         }
     }
-    
+
     static async removeFromCart(data: {
         userId: number;
         productId: number;
-    }):Promise<Response> {
+    }): Promise<Response> {
         try {
-            return await fetch(`http://localhost:3000/api/cart/remove-item`, {
+            return await fetch(`${SERVER_URL}/api/cart/remove-item`, {
                 method: "POST",
                 headers: {
                     "Content-Type": `application/json`,
