@@ -71,12 +71,15 @@ model Order {
 }
 
 model Payment {
-  id        Int      @id @default(autoincrement())
-  method    String
-  status    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  order     Order?
+  id              Int      @id @default(autoincrement())
+  method          String
+  status          String
+  transactionUuid String
+  totalAmount     Float
+  refId           String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+  order           Order?
 }
 
 model Testimonial {
