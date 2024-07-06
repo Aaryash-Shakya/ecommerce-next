@@ -15,6 +15,7 @@ export default function Dashboard() {
             paymentId: 0,
             createdAt: new Date(),
             updatedAt: new Date(),
+            transactionUuid: null
         },
     ]);
     useEffect(() => {
