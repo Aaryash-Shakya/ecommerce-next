@@ -7,7 +7,7 @@ import { UtilsService } from "@/services/utils.service";
 let form: any = null;
 export default function Test() {
     const [params, setParams] = useState({
-        amount: "100",
+        amount: "100.5",
         failure_url: "http://localhost:3000/checkout",
         product_delivery_charge: "0",
         product_service_charge: "0",
@@ -16,7 +16,7 @@ export default function Test() {
         signed_field_names: "total_amount,transaction_uuid,product_code",
         success_url: "http://localhost:3000/orders/success",
         tax_amount: "0",
-        total_amount: "100",
+        total_amount: "100.5",
         transaction_uuid: `heartwood-${UtilsService.generateOTP(6)}`,
     });
     const post = () => {

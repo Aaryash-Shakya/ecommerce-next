@@ -7,22 +7,13 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Dashboard() {
-    const [orders, setOrders] = useState<Order[]>([
-        {
-            id: 0,
-            userId: 0,
-            amount: 0,
-            paymentId: 0,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            transactionUuid: null
-        },
-    ]);
+    const [orders, setOrders] = useState<Order[]>([]);
     useEffect(() => {
         // fetch orders
         OrderApiClient.getOrders()
             .then((res) => {
-                if (!res.ok) throw new Error("Failed to fetch orders");
+                console.log(res);
+                if (!res.ok) throw new Error("No orders found");
                 return res.json();
             })
             .then((res) => {
@@ -30,11 +21,20 @@ export default function Dashboard() {
             })
             .catch((err) => {
                 console.log(err);
-                toast.error("Failed to fetch orders");
+                toast.error("No orders found");
             });
     }, []);
 
     const mapOrders = () => {
+        console.log(orders.length);
+        if (orders.length == 0)
+            return (
+                <tr className="text-lg">
+                    <td colSpan={5} className="text-center">
+                        No orders found
+                    </td>
+                </tr>
+            );
         return orders.map((order) => {
             return (
                 <tr key={order.id} className="text-lg">
@@ -43,7 +43,12 @@ export default function Dashboard() {
                     <td>{"2024 April 30"}</td>
                     <td>{"Shipping"}</td>
                     <td>
-                        <Link href={`/order/${order.id}`} className="btn btn-primary-light">View</Link>
+                        <Link
+                            href={`/order/${order.id}`}
+                            className="btn-primary-light btn"
+                        >
+                            View
+                        </Link>
                     </td>
                 </tr>
             );
@@ -65,10 +70,7 @@ export default function Dashboard() {
                             <th>Details</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {/* row 1 */}
-                        {mapOrders()}
-                    </tbody>
+                    <tbody>{mapOrders()}</tbody>
                 </table>
             </div>
         </div>
