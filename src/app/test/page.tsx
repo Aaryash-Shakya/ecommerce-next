@@ -6,7 +6,7 @@ import { UtilsService } from "@/services/utils.service";
 
 let form: any = null;
 export default function Test() {
-    const [params, setParams] = useState({
+    const [paymentParams, setPaymentParams] = useState({
         amount: "100.5",
         failure_url: "http://localhost:3000/checkout",
         product_delivery_charge: "0",
@@ -19,32 +19,32 @@ export default function Test() {
         total_amount: "100.5",
         transaction_uuid: `heartwood-${UtilsService.generateOTP(6)}`,
     });
-    const post = () => {
-        form = document.createElement("form");
-        form.setAttribute("method", "POST");
-        form.setAttribute("target", "_blank");
-        form.setAttribute(
-            "action",
-            "https://rc-epay.esewa.com.np/api/epay/main/v2/form",
-        );
-
-        for (const key in params) {
-            const hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute(
-                "value",
-                params[key as keyof typeof params],
-            ); // Add index signature
-            form.appendChild(hiddenField);
-        }
-
-        document.body.appendChild(form);
-    };
-
     useEffect(() => {
+        const post = () => {
+            form = document.createElement("form");
+            form.setAttribute("method", "POST");
+            form.setAttribute("target", "_blank");
+            form.setAttribute(
+                "action",
+                "https://rc-epay.esewa.com.np/api/epay/main/v2/form",
+            );
+
+            for (const key in paymentParams) {
+                const hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute(
+                    "value",
+                    paymentParams[key as keyof typeof paymentParams],
+                ); // Add index signature
+                form.appendChild(hiddenField);
+            }
+
+            document.body.appendChild(form);
+        };
+
         post();
-    });
+    }, [paymentParams]);
 
     const checkStatus = async () => {
         const res = await fetch(
@@ -53,14 +53,14 @@ export default function Test() {
     };
 
     const generateSignature = async () => {
-        const message = `total_amount=${params.total_amount},transaction_uuid=${params.transaction_uuid},product_code=${params.product_code}`;
+        const message = `total_amount=${paymentParams.total_amount},transaction_uuid=${paymentParams.transaction_uuid},product_code=${paymentParams.product_code}`;
         const secret = "8gBm/:&EnhH.1/q";
 
         const hash = crypto
             .createHmac("sha256", secret)
             .update(message)
             .digest("base64");
-        setParams({ ...params, signature: hash });
+        setPaymentParams({ ...paymentParams, signature: hash });
     };
 
     const handleSubmit = () => {
@@ -70,8 +70,8 @@ export default function Test() {
     return (
         <>
             <div className="flex h-screen w-screen flex-col items-center justify-center gap-3 bg-red-100">
-                <p>transaction_uuid: {params.transaction_uuid}</p>
-                <p>Hash: {params.signature}</p>
+                <p>transaction_uuid: {paymentParams.transaction_uuid}</p>
+                <p>Hash: {paymentParams.signature}</p>
                 <button onClick={generateSignature} className="btn btn-primary">
                     Hash
                 </button>
