@@ -55,9 +55,24 @@ export default function Dashboard() {
         });
     };
 
+    const handleSignOut = () => {
+        if (typeof window !== "undefined") {
+            localStorage.removeItem("isAuthenticated");
+            window.location.href = "/login";
+        }
+    };
+
     return (
         <div className="nav-margin container">
-            <h2 className="py-2 text-2xl font-bold">My Orders</h2>
+            <div className="flex items-center justify-between py-4">
+                <h2 className="py-2 text-2xl font-bold">My Orders</h2>
+                <div
+                    className="btn btn-info text-white"
+                    onClick={handleSignOut}
+                >
+                    Sign Out
+                </div>
+            </div>
             <div className="mx-auto mb-60 max-w-screen-xl overflow-x-auto border">
                 <table className="table">
                     {/* head */}

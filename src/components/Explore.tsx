@@ -24,7 +24,7 @@ const ExploreItem: React.FC<{ product: Product }> = ({ product }) => {
             </p>
             <a
                 href={`/product/${product.id}`}
-                className="btn-primary-light btn z-20 hidden border-none px-8 shadow-lg group-hover:block"
+                className="btn-primary-light btn z-20 hidden border-none px-8 shadow-lg group-hover:flex justify-center items-center"
             >
                 EXPLORE
             </a>

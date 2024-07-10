@@ -48,8 +48,10 @@ export default function Test() {
 
     const checkStatus = async () => {
         const res = await fetch(
-            `https://uat.esewa.com.np/api/epay/transaction/status/?product_code=EPAYTEST&total_amount=100&transaction_uuid=heartwood-000002`,
+            `https://uat.esewa.com.np/api/epay/transaction/status/?product_code=EPAYTEST&total_amount=${paymentParams.total_amount}&transaction_uuid=${paymentParams.transaction_uuid}`,
         );
+        const data = await res.json();
+        console.log(data);
     };
 
     const generateSignature = async () => {
@@ -78,6 +80,7 @@ export default function Test() {
                 <button onClick={handleSubmit} className="btn btn-primary">
                     Submit
                 </button>
+                <button onClick={checkStatus}>Check Status</button>
             </div>
         </>
     );

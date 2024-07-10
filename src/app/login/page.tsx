@@ -10,11 +10,13 @@ const Login = () => {
     const router = useRouter();
 
     const handleSignUp = () => {
-        localStorage.setItem("isAuthenticated", "true");
+        if (typeof window !== "undefined") {
+            localStorage.setItem("isAuthenticated", "true");
+        }
         setTimeout(() => {
             toast.success("Sign in successfully");
             router.push("/");
-        },200)
+        }, 200);
     };
 
     return (

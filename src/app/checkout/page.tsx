@@ -143,7 +143,9 @@ export default function Checkout() {
         setTimeout(() => {
             form.submit();
         }, 100);
-        handlePlaceOrder();
+        setTimeout(() => {
+            handlePlaceOrder();
+        }, 200);
     };
 
     return (

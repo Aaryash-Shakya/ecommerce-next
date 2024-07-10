@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { GiWoodenChair } from "react-icons/gi";
 import { HiMenuAlt1 } from "react-icons/hi";
+import { MdDashboard } from "react-icons/md";
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -16,9 +17,16 @@ export default function Navbar() {
         { name: "About", href: "/about" },
         { name: "Contact", href: "/contact" },
     ];
-    const isAuthenticated: boolean = Boolean(
-        localStorage.getItem("isAuthenticated"),
-    );
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    useEffect(() => {
+        const checkAuth = () => {
+            setIsAuthenticated(
+                Boolean(localStorage.getItem("isAuthenticated")) || false,
+            );
+        };
+        checkAuth();
+    }, []);
+
     return (
         <>
             <div className="glass fixed left-0 top-0 z-10 w-full">
@@ -89,12 +97,15 @@ export default function Navbar() {
                             <Link href="/cart" title="cart">
                                 <FaShoppingCart className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
                             </Link>
-                            <Link
-                                href={isAuthenticated ? "/dashboard" : "/login"}
-                                title="profile"
-                            >
-                                <FaUser className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
-                            </Link>
+                            {isAuthenticated ? (
+                                <Link href={"/dashboard"} title="dashboard">
+                                    <MdDashboard className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
+                                </Link>
+                            ) : (
+                                <Link href={"/login"} title="profile">
+                                    <FaUser className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
