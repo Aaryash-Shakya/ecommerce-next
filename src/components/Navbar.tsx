@@ -16,6 +16,9 @@ export default function Navbar() {
         { name: "About", href: "/about" },
         { name: "Contact", href: "/contact" },
     ];
+    const isAuthenticated: boolean = Boolean(
+        localStorage.getItem("isAuthenticated"),
+    );
     return (
         <>
             <div className="glass fixed left-0 top-0 z-10 w-full">
@@ -86,7 +89,10 @@ export default function Navbar() {
                             <Link href="/cart" title="cart">
                                 <FaShoppingCart className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
                             </Link>
-                            <Link href="/dashboard" title="profile">
+                            <Link
+                                href={isAuthenticated ? "/dashboard" : "/login"}
+                                title="profile"
+                            >
                                 <FaUser className="cursor-pointer text-xl hover:text-primary-dark/80 md:text-2xl" />
                             </Link>
                         </div>

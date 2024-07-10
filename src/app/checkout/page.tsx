@@ -82,7 +82,7 @@ export default function Checkout() {
         product_code: "EPAYTEST",
         signature: "",
         signed_field_names: "total_amount,transaction_uuid,product_code",
-        success_url: "http://localhost:3000/orders/success",
+        success_url: "http://localhost:3000/dashboard",
         tax_amount: "0",
         total_amount: grandTotal.toString(),
         transaction_uuid: `heartwood-${UtilsService.generateOTP(6)}`,
