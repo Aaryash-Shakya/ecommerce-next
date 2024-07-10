@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 const ExploreItem: React.FC<{ product: Product }> = ({ product }) => {
     return (
-        <div className="group relative flex aspect-video w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl bg-base-200 hover:bg-base-300">
+        <div className="group relative flex aspect-video w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl bg-base-200 shadow-md hover:bg-base-300">
             <Image
                 src={`/furniture/${product.image}-banner.avif`}
                 alt={product.name}
@@ -21,6 +21,22 @@ const ExploreItem: React.FC<{ product: Product }> = ({ product }) => {
             <span className="absolute left-0 top-0 hidden h-full w-full bg-gray-200/30 group-hover:block"></span>
             <p className="z-20 hidden font-playfair text-5xl font-bold text-primary-dark drop-shadow-lg group-hover:block">
                 {product.name}
+            </p>
+            <a
+                href={`/product/${product.id}`}
+                className="btn-primary-light btn z-20 hidden border-none px-8 shadow-lg group-hover:block"
+            >
+                EXPLORE
+            </a>
+        </div>
+    );
+};
+
+const NotFoundExploreItem: React.FC = () => {
+    return (
+        <div className="group relative flex aspect-video w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl bg-base-200 shadow-md hover:bg-base-300">
+            <p className="z-20 hidden font-playfair text-5xl font-bold text-primary-dark drop-shadow-lg group-hover:block">
+                No Product Found
             </p>
             <button className="btn-primary-light btn z-20 hidden border-none px-8 shadow-lg group-hover:block">
                 EXPLORE
@@ -55,164 +71,150 @@ export default function Explore() {
     }, []);
 
     const mapExploreItems = (products: Product[], category: string) => {
-        const filteredProducts = products.filter((product: Product) => {
-            return product.location.includes(category);
-        });
+        let filteredProducts: (Product | "notFound")[] = products.filter(
+            (product: Product) => {
+                return product.location.includes(category);
+            },
+        );
 
-        if (filteredProducts.length === 0)
-            return (
-                <h2 className="text-center text-2xl font-bold text-primary-dark">
-                    No products found
-                </h2>
-            );
+        // ensure that there's at most 4
+        if (filteredProducts.length > 4) {
+            filteredProducts = filteredProducts.slice(0, 4);
+        }
 
-            // dynamically add black block if items is less than 4 to make 4
+        // ensure that there's at least 4
+        while (filteredProducts.length < 4) {
+            filteredProducts.push("notFound");
+        }
 
-        return filteredProducts.map((product: Product, i: number) => {
-            if (i < 4)
+        // dynamically add black block if items is less than 4 to make 4
+
+        return filteredProducts.map(
+            (product: Product | "notFound", i: number) => {
+                if (product === "notFound")
+                    return <NotFoundExploreItem key={i} />;
                 return <ExploreItem key={product.id} product={product} />;
-        });
+            },
+        );
     };
 
     return (
-        <>
-            <div className="w-full py-10">
-                <div className="px-4 lg:container">
-                    <h2 className="mb-6 text-center font-playfair text-5xl font-bold text-primary-dark">
-                        Explore By Category
-                    </h2>
-                    <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-10">
-                        {/* top menu */}
-                        <div className="visible w-full lg:hidden">
-                            <ul className="menu menu-horizontal mt-6 rounded-box bg-base-200">
-                                <label className="input input-bordered flex w-full items-center justify-center">
-                                    <input
-                                        type="text"
-                                        className="bg-base-100"
-                                        placeholder="Search"
-                                    />
-                                    <FaSearch
-                                        size={20}
-                                        className="cursor-pointer"
-                                    />
-                                </label>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setCategory("living-room")
-                                        }
-                                    >
-                                        Living Room
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setCategory("dining-room")
-                                        }
-                                    >
-                                        Dining Room
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setCategory("meeting-room")
-                                        }
-                                    >
-                                        Meeting Room
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onClick={() => setCategory("office")}>
-                                        Office
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onClick={() => setCategory("bedroom")}>
-                                        Bedroom
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onClick={() => setCategory("kitchen")}>
-                                        Kitchen
-                                    </a>
-                                </li>
-                                <button className="btn-primary-light btn border-none px-8 shadow-lg">
-                                    All Categories <FaArrowRight size={25} />
-                                </button>
-                            </ul>
-                        </div>
+        <div className="w-full py-10">
+            <div className="px-4 lg:container">
+                <h2 className="mb-6 text-center font-playfair text-5xl font-bold text-primary-dark">
+                    Explore By Category
+                </h2>
+                <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-10">
+                    {/* top menu */}
+                    <div className="visible w-full lg:hidden">
+                        <ul className="menu menu-horizontal mt-6 rounded-box bg-base-200">
+                            <label className="input input-bordered flex w-full items-center justify-center">
+                                <input
+                                    type="text"
+                                    className="bg-base-100"
+                                    placeholder="Search"
+                                />
+                                <FaSearch
+                                    size={20}
+                                    className="cursor-pointer"
+                                />
+                            </label>
+                            <li>
+                                <div onClick={() => setCategory("living-room")}>
+                                    Living Room
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("dining-room")}>
+                                    Dining Room
+                                </div>
+                            </li>
+                            <li>
+                                <div
+                                    onClick={() => setCategory("meeting-room")}
+                                >
+                                    Meeting Room
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("office")}>
+                                    Office
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("bedroom")}>
+                                    Bedroom
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("kitchen")}>
+                                    Kitchen
+                                </div>
+                            </li>
+                            <button className="btn-primary-light btn border-none px-8 shadow-lg">
+                                All Categories <FaArrowRight size={25} />
+                            </button>
+                        </ul>
+                    </div>
 
-                        {/* side menu */}
-                        <div className="hidden lg:block lg:w-1/4">
-                            <ul className="menu menu-lg space-y-4 rounded-lg bg-base-200 text-lg text-primary-dark">
-                                <label className="input input-lg input-bordered flex w-full items-center justify-center">
-                                    <input
-                                        type="text"
-                                        className="bg-base-100"
-                                        placeholder="Search"
-                                    />
-                                    <FaSearch
-                                        size={20}
-                                        className="cursor-pointer"
-                                    />
-                                </label>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setCategory("living-room")
-                                        }
-                                    >
-                                        Living Room
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setCategory("dining-room")
-                                        }
-                                    >
-                                        Dining Room
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        onClick={() =>
-                                            setCategory("meeting-room")
-                                        }
-                                    >
-                                        Meeting Room
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onClick={() => setCategory("office")}>
-                                        Office
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onClick={() => setCategory("bedroom")}>
-                                        Bedroom
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onClick={() => setCategory("kitchen")}>
-                                        Kitchen
-                                    </a>
-                                </li>
-                                <button className="btn-primary-light btn border-none px-8 shadow-lg">
-                                    All Categories <FaArrowRight size={25} />
-                                </button>
-                            </ul>
-                        </div>
-                        <div className="ld:w-3/4 w-full">
-                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-8">
-                                {mapExploreItems(products, category)}
-                            </div>
+                    {/* side menu */}
+                    <div className="hidden lg:block lg:w-1/4">
+                        <ul className="menu menu-lg space-y-4 rounded-lg bg-base-200 text-lg text-primary-dark">
+                            <label className="input input-lg input-bordered flex w-full items-center justify-center">
+                                <input
+                                    type="text"
+                                    className="bg-base-100"
+                                    placeholder="Search"
+                                />
+                                <FaSearch
+                                    size={20}
+                                    className="cursor-pointer"
+                                />
+                            </label>
+                            <li>
+                                <div onClick={() => setCategory("living-room")}>
+                                    Living Room
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("dining-room")}>
+                                    Dining Room
+                                </div>
+                            </li>
+                            <li>
+                                <div
+                                    onClick={() => setCategory("meeting-room")}
+                                >
+                                    Meeting Room
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("office")}>
+                                    Office
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("bedroom")}>
+                                    Bedroom
+                                </div>
+                            </li>
+                            <li>
+                                <div onClick={() => setCategory("kitchen")}>
+                                    Kitchen
+                                </div>
+                            </li>
+                            <button className="btn-primary-light btn border-none px-8 shadow-lg">
+                                All Categories <FaArrowRight size={25} />
+                            </button>
+                        </ul>
+                    </div>
+                    <div className="ld:w-3/4 w-full">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-8">
+                            {mapExploreItems(products, category)}
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

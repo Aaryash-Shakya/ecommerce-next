@@ -119,7 +119,7 @@ export default function Checkout() {
                                     <label className="form-control w-full max-w-xs">
                                         <div className="label">
                                             <span className="label-text text-base font-semibold">
-                                                Zip Code
+                                                District
                                             </span>
                                         </div>
                                         <input
@@ -131,7 +131,7 @@ export default function Checkout() {
                                     <label className="form-control w-full max-w-xs">
                                         <div className="label">
                                             <span className="label-text text-base font-semibold">
-                                                Country
+                                                Postal Code
                                             </span>
                                         </div>
                                         <input

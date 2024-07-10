@@ -44,7 +44,7 @@ const Cart = () => {
                 0,
             );
             setSubtotal(sumOfItemTotal);
-            setTotal(sumOfItemTotal - 0.1 * sumOfItemTotal);
+            setTotal(Number((0.9 * sumOfItemTotal).toFixed(2)));
         };
 
         calculateOrderSummary();
@@ -248,7 +248,7 @@ const Cart = () => {
                                 <li className="text-md flex flex-wrap gap-4 py-3">
                                     Discount Amount{" "}
                                     <span className="ml-auto font-bold">
-                                        {0.1 * subtotal}
+                                        {Number((0.1 * subtotal).toFixed(2))}
                                     </span>
                                 </li>
                                 <li className="text-md flex flex-wrap gap-4 py-3 font-bold">
