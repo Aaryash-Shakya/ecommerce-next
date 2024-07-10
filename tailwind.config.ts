@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
 import daisyui from "daisyui";
-import { Playfair } from "next/font/google";
 
 const config: Config = {
 	content: [
@@ -38,7 +37,7 @@ const config: Config = {
 	},
 	plugins: [daisyui],
 	daisyui: {
-		themes: ["light", "dark", "cupcake"],
+		themes: ["light"],
 	},
 };
 export default config;

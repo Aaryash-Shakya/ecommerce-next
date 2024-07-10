@@ -1,8 +1,79 @@
-import React from "react";
+"use client";
+
+import { ProductApiClient } from "@/apiClients/ProductApiClient";
+import { Product } from "@prisma/client";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
+import { toast } from "react-toastify";
+
+const ExploreItem: React.FC<{ product: Product }> = ({ product }) => {
+    return (
+        <div className="group relative flex aspect-video w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl bg-base-200 hover:bg-base-300">
+            <Image
+                src={`/furniture/${product.image}-banner.avif`}
+                alt={product.name}
+                height={500}
+                width={500}
+                className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 object-cover"
+            />
+            <span className="absolute left-0 top-0 hidden h-full w-full bg-gray-200/30 group-hover:block"></span>
+            <p className="z-20 hidden font-playfair text-5xl font-bold text-primary-dark drop-shadow-lg group-hover:block">
+                {product.name}
+            </p>
+            <button className="btn-primary-light btn z-20 hidden border-none px-8 shadow-lg group-hover:block">
+                EXPLORE
+            </button>
+        </div>
+    );
+};
 
 export default function Explore() {
+    const [category, setCategory] = useState<
+        | "living-room"
+        | "meeting-room"
+        | "dining-room"
+        | "office"
+        | "bedroom"
+        | "kitchen"
+    >("living-room");
+    const [products, setProducts] = useState<Product[]>([]);
+    useEffect(() => {
+        const getAllProducts = async () => {
+            const res = await ProductApiClient.getAllProducts();
+            if (!res.ok) {
+                toast.error("Error fetching products");
+                throw new Error("Error fetching products");
+            }
+            const resJson: { message: string; data: Product[] } =
+                await res.json();
+            setProducts(resJson.data);
+            console.log(resJson.data);
+        };
+        getAllProducts();
+    }, []);
+
+    const mapExploreItems = (products: Product[], category: string) => {
+        const filteredProducts = products.filter((product: Product) => {
+            return product.location.includes(category);
+        });
+
+        if (filteredProducts.length === 0)
+            return (
+                <h2 className="text-center text-2xl font-bold text-primary-dark">
+                    No products found
+                </h2>
+            );
+
+            // dynamically add black block if items is less than 4 to make 4
+
+        return filteredProducts.map((product: Product, i: number) => {
+            if (i < 4)
+                return <ExploreItem key={product.id} product={product} />;
+        });
+    };
+
     return (
         <>
             <div className="w-full py-10">
@@ -26,25 +97,46 @@ export default function Explore() {
                                     />
                                 </label>
                                 <li>
-                                    <a>Living Room</a>
+                                    <a
+                                        onClick={() =>
+                                            setCategory("living-room")
+                                        }
+                                    >
+                                        Living Room
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Dining Room</a>
+                                    <a
+                                        onClick={() =>
+                                            setCategory("dining-room")
+                                        }
+                                    >
+                                        Dining Room
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Meeting Room</a>
+                                    <a
+                                        onClick={() =>
+                                            setCategory("meeting-room")
+                                        }
+                                    >
+                                        Meeting Room
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Living Space</a>
+                                    <a onClick={() => setCategory("office")}>
+                                        Office
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Workspace</a>
+                                    <a onClick={() => setCategory("bedroom")}>
+                                        Bedroom
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Bedroom</a>
-                                </li>
-                                <li>
-                                    <a>Kitchen</a>
+                                    <a onClick={() => setCategory("kitchen")}>
+                                        Kitchen
+                                    </a>
                                 </li>
                                 <button className="btn-primary-light btn border-none px-8 shadow-lg">
                                     All Categories <FaArrowRight size={25} />
@@ -67,25 +159,46 @@ export default function Explore() {
                                     />
                                 </label>
                                 <li>
-                                    <a>Living Room</a>
+                                    <a
+                                        onClick={() =>
+                                            setCategory("living-room")
+                                        }
+                                    >
+                                        Living Room
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Dining Room</a>
+                                    <a
+                                        onClick={() =>
+                                            setCategory("dining-room")
+                                        }
+                                    >
+                                        Dining Room
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Meeting Room</a>
+                                    <a
+                                        onClick={() =>
+                                            setCategory("meeting-room")
+                                        }
+                                    >
+                                        Meeting Room
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Living Space</a>
+                                    <a onClick={() => setCategory("office")}>
+                                        Office
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Workspace</a>
+                                    <a onClick={() => setCategory("bedroom")}>
+                                        Bedroom
+                                    </a>
                                 </li>
                                 <li>
-                                    <a>Bedroom</a>
-                                </li>
-                                <li>
-                                    <a>Kitchen</a>
+                                    <a onClick={() => setCategory("kitchen")}>
+                                        Kitchen
+                                    </a>
                                 </li>
                                 <button className="btn-primary-light btn border-none px-8 shadow-lg">
                                     All Categories <FaArrowRight size={25} />
@@ -94,38 +207,7 @@ export default function Explore() {
                         </div>
                         <div className="ld:w-3/4 w-full">
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-8">
-                                <div className="group flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-3xl bg-base-200 hover:bg-base-300">
-                                    <p className="hidden font-playfair text-5xl font-bold text-primary-dark group-hover:block">
-                                        Couch
-                                    </p>
-                                    <button className="btn-primary-light btn hidden border-none px-8 shadow-lg group-hover:block">
-                                        EXPLORE
-                                    </button>
-                                </div>
-                                <div className="group flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-3xl bg-base-200 hover:bg-base-300">
-                                    <p className="hidden font-playfair text-5xl font-bold text-primary-dark group-hover:block">
-                                        Couch
-                                    </p>
-                                    <button className="btn-primary-light btn hidden border-none px-8 shadow-lg group-hover:block">
-                                        EXPLORE
-                                    </button>
-                                </div>
-                                <div className="group flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-3xl bg-base-200 hover:bg-base-300">
-                                    <p className="hidden font-playfair text-5xl font-bold text-primary-dark group-hover:block">
-                                        Couch
-                                    </p>
-                                    <button className="btn-primary-light btn hidden border-none px-8 shadow-lg group-hover:block">
-                                        EXPLORE
-                                    </button>
-                                </div>
-                                <div className="group flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-3xl bg-base-200 hover:bg-base-300">
-                                    <p className="hidden font-playfair text-5xl font-bold text-primary-dark group-hover:block">
-                                        Couch
-                                    </p>
-                                    <button className="btn-primary-light btn hidden border-none px-8 shadow-lg group-hover:block">
-                                        EXPLORE
-                                    </button>
-                                </div>
+                                {mapExploreItems(products, category)}
                             </div>
                         </div>
                     </div>
