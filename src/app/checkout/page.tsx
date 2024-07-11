@@ -145,7 +145,7 @@ export default function Checkout() {
         }, 100);
         setTimeout(() => {
             handlePlaceOrder();
-        }, 200);
+        }, 2000);
     };
 
     return (

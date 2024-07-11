@@ -40,7 +40,7 @@ export default function Dashboard() {
                 <tr key={order.id} className="text-lg">
                     <td>{order.id}</td>
                     <td>{order.amount}</td>
-                    <td>{"2024 April 30"}</td>
+                    <td>{"2024 July 11"}</td>
                     <td>{"Shipping"}</td>
                     <td>
                         <Link

@@ -8,13 +8,13 @@ let form: any = null;
 export default function Test() {
     const [paymentParams, setPaymentParams] = useState({
         amount: "100.5",
-        failure_url: "http://localhost:3000/checkout",
+        failure_url: "http://localhost:3000/test",
         product_delivery_charge: "0",
         product_service_charge: "0",
         product_code: "EPAYTEST",
         signature: "",
         signed_field_names: "total_amount,transaction_uuid,product_code",
-        success_url: "http://localhost:3000/orders/success",
+        success_url: "http://localhost:3000/test",
         tax_amount: "0",
         total_amount: "100.5",
         transaction_uuid: `heartwood-${UtilsService.generateOTP(6)}`,
@@ -47,11 +47,12 @@ export default function Test() {
     }, [paymentParams]);
 
     const checkStatus = async () => {
-        const res = await fetch(
+        fetch(
             `https://uat.esewa.com.np/api/epay/transaction/status/?product_code=EPAYTEST&total_amount=${paymentParams.total_amount}&transaction_uuid=${paymentParams.transaction_uuid}`,
         );
-        const data = await res.json();
-        console.log(data);
+        console.log(
+            `https://uat.esewa.com.np/api/epay/transaction/status/?product_code=EPAYTEST&total_amount=${paymentParams.total_amount}&transaction_uuid=${paymentParams.transaction_uuid}`,
+        );
     };
 
     const generateSignature = async () => {
