@@ -48,7 +48,7 @@ function Product({ params }: ProductProps) {
                 setProduct(res.data as ProductType);
             })
             .catch((err: Error) => {
-                toast.error(err.message || "Failed to add to cart.", {
+                toast.error(err.message || "Failed to fetch product.", {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,

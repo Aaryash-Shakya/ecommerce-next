@@ -1,12 +1,38 @@
 import React from "react";
 import PopularItem from "./PopularItem";
+import prisma from "@/client";
 
 export default function Popular() {
-    const mapPopularItems = (itemCount: number) => {
+    const mapPopularItems = async (itemCount: number) => {
         // randomly initialize a null array of 8 items
-        return Array(itemCount)
-            .fill(null)
-            .map((_, i) => <PopularItem key={i} index={i} itemId={i} />);
+        const products = await prisma.product.findMany();
+        if (products.length == 0) {
+            return Array(itemCount)
+                .fill(null)
+                .map((_, i) => (
+                    <PopularItem
+                        key={i}
+                        index={i}
+                        itemId={i}
+                        name={"Blue Sofa"}
+                        price={6200}
+                        image={"/blue-chair.png"}
+                    />
+                ));
+        }
+        return products.map((product, i) => {
+            if (i < itemCount)
+                return (
+                    <PopularItem
+                        key={product.id}
+                        index={i}
+                        itemId={product.id}
+                        name={product.name}
+                        price={product.price}
+                        image={product.image || "blue-chair.png"}
+                    />
+                );
+        });
     };
     return (
         <>

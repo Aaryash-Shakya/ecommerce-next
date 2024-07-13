@@ -59,24 +59,28 @@ model Cart {
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  payment   Payment? @relation(fields: [paymentId], references: [id])
-  paymentId Int?     @unique
-  amount    Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  cart      Cart[]
+  id              Int      @id @default(autoincrement())
+  transactionUuid String?  @unique
+  user            User     @relation(fields: [userId], references: [id])
+  userId          Int
+  payment         Payment? @relation(fields: [paymentId], references: [id])
+  paymentId       Int?     @unique
+  amount          Float
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+  cart            Cart[]
 }
 
 model Payment {
-  id        Int      @id @default(autoincrement())
-  method    String
-  status    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  order     Order?
+  id              Int      @id @default(autoincrement())
+  method          String
+  status          String
+  transactionUuid String
+  totalAmount     Float
+  refId           String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+  order           Order?
 }
 
 model Testimonial {

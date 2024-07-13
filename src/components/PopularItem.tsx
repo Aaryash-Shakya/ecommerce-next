@@ -4,11 +4,20 @@ import React from "react";
 type PopularItemPropsType = {
     index: number;
     itemId: number;
+    name: string;
+    price: number;
+    image: string;
 };
 
-const PopularItem: React.FC<PopularItemPropsType> = ({ index }) => {
+const PopularItem: React.FC<PopularItemPropsType> = ({
+    index,
+    itemId,
+    name,
+    price,
+    image,
+}) => {
     return (
-        <div className="carousel-item">
+        <a className="carousel-item" href={`/product/${itemId}`}>
             <div
                 className={`skeleton flex aspect-[3/4] w-64 flex-col items-start justify-center p-4 md:p-7
                     ${
@@ -23,17 +32,17 @@ const PopularItem: React.FC<PopularItemPropsType> = ({ index }) => {
                     `}
             >
                 <Image
-                    src="/blue-chair.png"
-                    alt="sofa"
-                    width={120}
-                    height={120}
-                    className="mx-auto"
+                    src={`/furniture/${image}-banner.avif`}
+                    alt={name}
+                    width={200}
+                    height={200}
+                    className="mx-auto shadow-lg hover:scale-[1.02] ease-in-out"
                 />
-                <p className="mt-4 font-semibold">Premium Sofa</p>
+                <p className="mt-4 font-semibold">{name}</p>
                 <p className="mt-4">Minimal single chair</p>
-                <p className="mt-2 font-semibold">Rs 4000</p>
+                <p className="mt-2 font-semibold">RS {price}</p>
             </div>
-        </div>
+        </a>
     );
 };
 

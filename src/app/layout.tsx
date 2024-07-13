@@ -27,7 +27,7 @@ export default function RootLayout({
             <head>
                 <link
                     rel="shortcut icon"
-                    href="./favicon.png"
+                    href="/heartwood-favicon.jpg"
                     type="image/png"
                 />
             </head>
